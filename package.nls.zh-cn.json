@@ -1,0 +1,119 @@
+{
+    "ldgGist.name":"LDG 代码片段",
+    "ldgGist.login":"设置私人令牌",
+    "ldgGist.fillToken":"请填写您的私人令牌",
+    "ldgGist.noTokenMsg": "测试中文翻译",
+    "ldgGist.tokenFillCanceled":"私人令牌填写已取消",
+    "ldgGist.gists":"代码片段",
+    "ldgGist.commits":"提交历史",
+    "ldgGist.comments":"评论列表",
+    "ldgGist.publicGists":"代码片段广场",
+    "ldgGist.owner":"作者",
+    "ldgGist.public":"公开",
+    "ldgGist.private":"私有",
+    "ldgGist.changed":"更改",
+    "ldgGist.additions":"增加",
+    "ldgGist.deletions":"删除",
+
+    "ldgGist.confirm":"确认",
+    "ldgGist.cancel":"取消",
+    "ldgGist.loading":"加载中...",
+
+    "ldgGist.gistsEmpty":"尚未添加代码片段",
+    "ldgGist.commitsEmpty":"没有更改记录",
+    "ldgGist.commentsEmpty":"没有评论记录",
+    "ldgGist.publicGistsEmpty":"没有找到公开的代码片段",
+    "ldgGist.selectedGist":"选择代码片段",
+    "ldgGist.openCode":"打开代码",
+    "ldgGist.createFromFile": "用文件创建代码片段",
+    "ldgGist.createFromSelect": "用选中内容创建代码片段",
+
+    "ldgGist.addFromFile": "将文件添加到已存在的代码片段",
+    "ldgGist.addFromSelect": "将选中内容添加到已存在的代码片段",
+    "ldgGist.saveGistFile": "保存代码片段的修改",
+
+    "ldgGist.delete": "删除代码片段",
+    "ldgGist.deleteFile": "删除代码片段中的文件",
+
+    "ldgGist.refreshGists": "刷新代码片段列表",
+    "ldgGist.refreshPublicGists": "刷新代码片段广场列表",
+
+    "ldgGist.createComment": "创建评论",
+    "ldgGist.editComment": "编辑评论",
+    "ldgGist.deleteComment": "删除评论",
+
+
+    "ldgGist.accessToken": "请填写 Gitee[立即创建](https://gitee.com/profile/personal_access_tokens) 或者 GitHub[立即创建](https://github.com/settings/tokens) 创建的 `私人令牌`",
+    "ldgGist.workspaceFolder": "保存临时代码的文件夹",
+
+    "ldgGist.now":"刚刚",
+    "ldgGist.secondsAgo":"{0} 秒钟前",
+    "ldgGist.minutesAgo":"{0} 分钟前",
+    "ldgGist.hoursAgo":"{0} 小时前",
+    "ldgGist.daysAgo":"{0} 天前",
+    "ldgGist.weeksAgo":"{0} 周前",
+    "ldgGist.monthsAgo":"{0} 个月前",
+
+    "ldgGist.gistDescription":"代码片段描述",
+    "ldgGist.fileName":"文件名称",
+    "ldgGist.isPublic":"公开(true)/私有(false)，默认为私有",
+    "ldgGist.fileCount":"共{0}个文件",
+    "ldgGist.fileWriteError":"文件写入出错,错误信息：{0}",
+
+    "ldgGist.getListProgress":"正在加载第{0}页{1}...",
+    "ldgGist.getListError":"获取第{0}页{1}出错，错误信息：{2}",
+    "ldgGist.gistContentProgress":"加载代码片段文件内容中..",
+
+    "ldgGist.gistCreateProgress":"代码片段 【{0}】创建中...",
+    "ldgGist.gistCreateSuccess":"代码片段【{0}】创建成功！",
+    "ldgGist.gistCreateError":"代码片段【{0}】创建失败，错误信息：{1}",
+
+    "ldgGist.gistAddProgress":"正在将文件【{0}】添加到代码片段【{1}】...",
+    "ldgGist.gistAddConfirm":"代码片段【{1}】中【{0}】已存在，是否确认覆盖？",
+    "ldgGist.gistAddSuccess":"文件【{0}】已经成功添加到代码片段【{1}】中！",
+    "ldgGist.gistAddError":"文件【{0}】添加到代码片段【{1}】时失败，错误信息：{2}",
+
+    "ldgGist.gistEditPlaceHolder":"置空表示不修改描述({0})",
+    "ldgGist.gistEditProgress":"代码片段【{0}】更新中...",
+    "ldgGist.gistEditSuccess":"代码片段【{0}】中的文件【{1}】已更新！",
+    "ldgGist.gistEditError":"代码片段更新失败，错误信息：{0}",
+
+    "ldgGist.gistDeleteConfirm":"确认删除代码片段【{0}】吗？",
+    "ldgGist.gistDeleteProgress":"代码片段【{0}】删除中...",
+    "ldgGist.gistDeleteSuccess":"代码片段【{0}】已删除！",
+    "ldgGist.gistDeleteError":"代码片段【{0}】删除失败，错误信息：{1}",
+
+    "ldgGist.gistFileDeleteConfirm":"确认从【{0}】中删除文件【{1}】吗？",
+    "ldgGist.gistFileDeleteProgress":"正在从【{0}】中删除文件【{1}】...",
+    "ldgGist.gistFileDeleteSuccess":"已成功从【{0}】中删除文件【{1}】！",
+    "ldgGist.gistFileDeleteError":"从【{0}】中删除文件【{1}】失败，错误信息：{2}",
+
+    "ldgGist.gistCommitsProgress":"正在加载提交记录..",
+    "ldgGist.gistCommitsError":"获取提交记录出错，错误信息：{0}",
+
+    "ldgGist.gistCommentsProgress":"正在加载评论列表..",
+    "ldgGist.gistCommentsError":"获取评论列表出错，错误信息：{0}",
+    "ldgGist.gistCommentCreatePlaceHolder":"请输入评论的内容",
+    "ldgGist.gistCommentEditPlaceHolder":"请输入评论的内容,置空表示不修改评论({0})",
+    "ldgGist.gistCommentCreateProgress":"评论添加中...",
+    "ldgGist.gistCommentCreateSuccess":"评论【{0}】添加成功！",
+    "ldgGist.gistCommentCreateError":"评论【{0}】添加失败，错误信息：{1}",
+    "ldgGist.gistCommentEditProgress":"评论更新中...",
+    "ldgGist.gistCommentEditSuccess":"评论内容已更新！",
+    "ldgGist.gistCommentEditError":"评论内容更新失败，错误信息：{1}",
+    "ldgGist.gistCommentDeleteConfirm":"确认删除评论【{0}】吗？",
+    "ldgGist.gistCommentDeleteProgress":"评论【{0}】删除中...",
+    "ldgGist.gistCommentDeleteSuccess":"评论【{0}】已删除！",
+    "ldgGist.gistCommentDeleteError":"评论【{0}】删除失败，错误信息：{1}",
+
+    "ldgGist.gistNoSelected":"请先选择一个代码片段",
+    "ldgGist.noSelected":"当前未选中任何内容！",
+    "ldgGist.gistNotOpen":"当前未打开任何代码片段！",
+    "ldgGist.documentIsNotOperate":"当前文档不是可操作的代码片段，期望的文档路径为{0}，当前却为{1}",
+    "ldgGist.contentEmptyError":"内容不可为空！",
+    "ldgGist.fileContentEmptyError":"文件内容不可为空！",
+    "ldgGist.upFileError":"文件 {0} 上传失败，错误信息：{1}",
+
+
+    "ldgGist.null":""
+}

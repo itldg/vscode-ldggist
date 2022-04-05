@@ -1,0 +1,272 @@
+{
+	"name": "ldggist",
+	"displayName": "LdgGist",
+	"publisher": "itldg",
+	"description": "基于Gitee和GitHub的代码片段管理工具",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.65.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"keywords": [
+		"代码片段",
+		"git",
+		"gitee",
+		"github",
+		"gists",
+		"snippets"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wanglong126/vscode-ldgGist"
+	},
+	"main": "./out/extension.js",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "ldgActivitybar",
+					"title": "%ldgGist.name%",
+					"icon": "$(code)"
+				}
+			]
+		},
+		"views": {
+			"ldgActivitybar": [
+				{
+					"id": "gists",
+					"name": "%ldgGist.gists%"
+				},
+				{
+					"id": "commits",
+					"name": "%ldgGist.commits%",
+					"icon": "$(git-commit)",
+					"visibility": "collapsed",
+					"when": "ldgGist.tokenType == github"
+				},
+				{
+					"id": "comments",
+					"name": "%ldgGist.comments%",
+					"icon": "$(comment-discussion)",
+					"visibility": "collapsed"
+				},
+				{
+					"id": "publicGists",
+					"name": "%ldgGist.publicGists%",
+					"when": "ldgGist.tokenType == github"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "gists",
+				"contents": "%ldgGist.gistsEmpty%"
+			},
+			{
+				"view": "commits",
+				"contents": "%ldgGist.commitsEmpty%"
+			},
+			{
+				"view": "comments",
+				"contents": "%ldgGist.commentsEmpty%"
+			},
+			{
+				"view": "publicGists",
+				"contents": "%ldgGist.publicGistsEmpty%"
+			}
+		],
+		"commands": [
+			{
+				"command": "ldgGist.login",
+				"title": "%ldgGist.login%",
+				"icon": "$(log-in)"
+			},
+			{
+				"command": "ldgGist.selectedGist",
+				"title": "%ldgGist.selectedGist%"
+			},
+			{
+				"command": "ldgGist.openCode",
+				"title": "%ldgGist.openCode%",
+				"icon": "$(pencil)"
+			},
+			{
+				"command": "ldgGist.createFromFile",
+				"title": "%ldgGist.createFromFile%",
+				"icon": "$(add)"
+			},
+			{
+				"command": "ldgGist.createFromSelect",
+				"title": "%ldgGist.createFromSelect%",
+				"icon": "$(add)"
+			},
+			{
+				"command": "ldgGist.addFromFile",
+				"title": "%ldgGist.addFromFile%",
+				"icon": "$(file-add)"
+			},
+			{
+				"command": "ldgGist.addFromSelect",
+				"title": "%ldgGist.addFromSelect%",
+				"icon": "$(file-add)"
+			},
+			{
+				"command": "ldgGist.saveGistFile",
+				"title": "%ldgGist.saveGistFile%",
+				"icon": "$(save)"
+			},
+			{
+				"command": "ldgGist.delete",
+				"title": "%ldgGist.delete%",
+				"icon": "$(trash)"
+			},
+			{
+				"command": "ldgGist.deleteFile",
+				"title": "%ldgGist.deleteFile%",
+				"icon": "$(close)"
+			},
+			{
+				"command": "ldgGist.refreshGists",
+				"title": "%ldgGist.refreshGists%",
+				"icon": "$(refresh)"
+			},
+			{
+				"command": "ldgGist.refreshPublicGists",
+				"title": "%ldgGist.refreshPublicGists%",
+				"icon": "$(refresh)"
+			},
+			{
+				"command": "ldgGist.createComment",
+				"title": "%ldgGist.createComment%",
+				"icon": "$(add)"
+			},
+			{
+				"command": "ldgGist.editComment",
+				"title": "%ldgGist.editComment%",
+				"icon": "$(pencil)"
+			},
+			{
+				"command": "ldgGist.deleteComment",
+				"title": "%ldgGist.deleteComment%",
+				"icon": "$(close)"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorHasSelection",
+					"command": "ldgGist.createFromSelect",
+					"group": "navigation@2"
+				},
+				{
+					"when": "editorHasSelection",
+					"command": "ldgGist.addFromSelect",
+					"group": "navigation@2"
+				},
+				{
+					"when": "editorFocus",
+					"command": "ldgGist.saveGistFile",
+					"group": "navigation@2"
+				}
+			],
+			"explorer/context": [
+				{
+					"when": "!explorerResourceIsFolder",
+					"command": "ldgGist.createFromFile",
+					"group": "navigation"
+				},
+				{
+					"when": "!explorerResourceIsFolder",
+					"command": "ldgGist.addFromFile",
+					"group": "navigation@1"
+				}
+			],
+			"view/title": [
+				{
+					"command": "ldgGist.login",
+					"when": "view == gists",
+					"group": "navigation@0"
+				},
+				{
+					"command": "ldgGist.refreshGists",
+					"when": "view == gists",
+					"group": "navigation@1"
+				},
+				{
+					"command": "ldgGist.createComment",
+					"when": "view == comments",
+					"group": "navigation@0"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "ldgGist.delete",
+					"when": "view == gists && viewItem == gist",
+					"group": "inline"
+				},
+				{
+					"command": "ldgGist.deleteFile",
+					"when": "view == gists && viewItem == gistFile",
+					"group": "inline"
+				},
+				{
+					"command": "ldgGist.editComment",
+					"when": "view == comments",
+					"group": "inline"
+				},
+				{
+					"command": "ldgGist.deleteComment",
+					"when": "view == comments",
+					"group": "inline"
+				}
+			]
+		},
+		"configuration": {
+			"title": "ldgGist",
+			"properties": {
+				"ldgGist.accessToken": {
+					"type": "string",
+					"markdownDescription": "%ldgGist.accessToken%",
+					"default": ""
+				},
+				"ldgGist.workspaceFolder": {
+					"type": "string",
+					"description": "%ldgGist.workspaceFolder%",
+					"default": ""
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/fs-extra": "^9.0.13",
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.0",
+		"@types/node": "14.x",
+		"@types/request": "^2.48.8",
+		"@types/vscode": "^1.65.0",
+		"@typescript-eslint/eslint-plugin": "^5.16.0",
+		"@typescript-eslint/parser": "^5.16.0",
+		"@vscode/test-electron": "^2.1.3",
+		"eslint": "^8.11.0",
+		"glob": "^7.2.0",
+		"mocha": "^9.2.2",
+		"typescript": "^4.5.5"
+	},
+	"dependencies": {
+		"fs-extra": "^10.0.1",
+		"request": "^2.88.2"
+	}
+}

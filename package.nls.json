@@ -1,0 +1,120 @@
+{
+    "ldgGist.name":"LDG Gist",
+    "ldgGist.login":"Set access token",
+    "ldgGist.fillToken":"Please fill in Access_token",
+    "ldgGist.noTokenMsg": "You have not configured access_token, please enter access_token in the input box to continue.",
+    "ldgGist.tokenFillCanceled":"Token fill in canceled",
+    "ldgGist.gists":"Gists",
+    "ldgGist.commits":"Commits",
+    "ldgGist.comments":"Comments",
+    "ldgGist.publicGists":"Public gists",
+    "ldgGist.owner":"owner",
+    "ldgGist.public":"public",
+    "ldgGist.private":"private",
+    "ldgGist.changed":"changed",
+    "ldgGist.additions":"additions",
+    "ldgGist.deletions":"deletions",
+    
+    "ldgGist.confirm":"Confirm",
+    "ldgGist.cancel":"Cancel",
+    "ldgGist.loading":"Loading...",
+
+    "ldgGist.gistsEmpty":"Gists is empty",
+    "ldgGist.commitsEmpty":"Commits is empty",
+    "ldgGist.commentsEmpty":"Comments is empty",
+    "ldgGist.publicGistsEmpty":"Public gists is empty",
+    "ldgGist.selectedGist":"Select gist",
+    "ldgGist.openCode":"Open code",
+    "ldgGist.createFromFile": "Creating gist from file",
+    "ldgGist.createFromSelect": "Creating gist from selected content",
+
+    "ldgGist.addFromFile": "Add to existing gist from file",
+    "ldgGist.addFromSelect": "Add to existing gist from selected content",
+    "ldgGist.saveGistFile": "Save the modifications to the gist file",
+
+    "ldgGist.delete": "Delete gist",
+    "ldgGist.deleteFile": "Deleting files in gist",
+
+    "ldgGist.refreshGists": "Refresh gists",
+    "ldgGist.refreshPublicGists": "Refresh public gists",
+
+    "ldgGist.createComment": "Create commont",
+    "ldgGist.editComment": "Edit commont",
+    "ldgGist.deleteComment": "Delete commont",
+
+
+    "ldgGist.accessToken": "GitHub[Generate token](https://github.com/settings/tokens) or Gitee[Generate token](https://gitee.com/profile/personal_access_tokens) `access token` ",
+    "ldgGist.workspaceFolder": "The path of the workspace folder to store the problem files.",
+
+    "ldgGist.now":"now",
+    "ldgGist.secondsAgo":"{0} seconds ago",
+    "ldgGist.minutesAgo":"{0} minutes ago",
+    "ldgGist.hoursAgo":"{0} hours ago",
+    "ldgGist.daysAgo":"{0} days ago",
+    "ldgGist.weeksAgo":"{0} weeks ago",
+    "ldgGist.monthsAgo":"{0} months ago",
+
+    "ldgGist.gistDescription":"Gist description",
+    "ldgGist.fileName":"File name",
+    "ldgGist.isPublic":"public(true)/private(false), default is private",
+    "ldgGist.fileCount":"Total {0} file",
+    "ldgGist.fileWriteError":"File write error, error message: {0}",
+    
+    "ldgGist.select":"select{0}",
+    "ldgGist.getListProgress":"Loading the {0} page {1} ...",
+    "ldgGist.getListError":"Get the {0} page {1} error, error message: {2}",
+    "ldgGist.gistContentProgress":"Load gist file content..",
+
+    "ldgGist.gistCreateProgress":"Gist [{0}] creation...",
+    "ldgGist.gistCreateSuccess":"Gist [{0}] create success",
+    "ldgGist.gistCreateError":"Gist [{0}] creation failure,error message:{1}",
+
+    "ldgGist.gistAddProgress":"Add file [{0}] to gist [{1}] ...",
+    "ldgGist.gistAddConfirm":"The gist [{1}] [{0}] already exists, is it confirmed?",
+    "ldgGist.gistAddSuccess":"File [{0}] has been successfully added to the gist [{1}].",
+    "ldgGist.gistAddError":"Failed when the file [{0}] is added to the gist [{1}], error message: {2}",
+
+    "ldgGist.gistEditPlaceHolder":"When you are empty, you will not modify the description ({0})",
+    "ldgGist.gistEditProgress":"Gist [{0}] updating...",
+    "ldgGist.gistEditSuccess":"The file in the gist [{0}] [{1}] is updated!",
+    "ldgGist.gistEditError":"Gist update failure,error message:{0}",
+
+    "ldgGist.gistDeleteConfirm":"Confirm to delete gist fragment [{0}]?",
+    "ldgGist.gistDeleteProgress":"Gist [{0}] deleting...",
+    "ldgGist.gistDeleteSuccess":"Gist [{0}] deleted",
+    "ldgGist.gistDeleteError":"Gist [{0}] delete failed,error message:{1}",
+
+    "ldgGist.gistFileDeleteConfirm":"Confirm to delete gist file fragment [{0}]?",
+    "ldgGist.gistFileDeleteProgress":"Remove files from [{0}] [{1}] ...",
+    "ldgGist.gistFileDeleteSuccess":"Successfully removed files from [{0}] [{1}]!",
+    "ldgGist.gistFileDeleteError":"Remove files from [{0}] [{1}] failed, error message: {2}",
+
+    "ldgGist.gistCommitsProgress":"Loading commits..",
+    "ldgGist.gistCommitsError":"Load commits failed,error message:{0}",
+
+    "ldgGist.gistCommentsProgress":"Loading comments..",
+    "ldgGist.gistCommentsError":"Load comments failed,error message:{0}",
+    "ldgGist.gistCommentCreatePlaceHolder":"Please enter the content of the comment",
+    "ldgGist.gistCommentEditPlaceHolder":"Please enter the content of the comment, blank means that the comment is not modified ({0})",
+
+    "ldgGist.gistCommentCreateProgress":"Comment creation...",
+    "ldgGist.gistCommentCreateSuccess":"Comment [{0}] create success",
+    "ldgGist.gistCommentCreateError":"Comment [{0}] creation failure,error message:{1}",
+    "ldgGist.gistCommentEditProgress":"Comment updating...",
+    "ldgGist.gistCommentEditSuccess":"The file in the comment [{0}] is updated!",
+    "ldgGist.gistCommentEditError":"Comment update failure,error message:{0}",
+    "ldgGist.gistCommentDeleteConfirm":"Confirm to delete comment fragment [{0}]?",
+    "ldgGist.gistCommentDeleteProgress":"Comment [{0}] deleting...",
+    "ldgGist.gistCommentDeleteSuccess":"Comment[{0}] deleted",
+    "ldgGist.gistCommentDeleteError":"Comment[{0}] delete failed,error message:{1}",
+
+    "ldgGist.gistNoSelected":"Please select a gist first",
+    "ldgGist.noSelected":"Nothing is currently selected!",
+    "ldgGist.gistNotOpen":"File is not open!",
+    "ldgGist.documentIsNotOperate":"The current document is not an operational code snippet, the expected document path is {0}, currently {1}",
+    "ldgGist.contentEmptyError":"The content can not be empty!",
+    "ldgGist.fileContentEmptyError":"The contents of the file must not be empty!",
+    "ldgGist.upFileError":"File {0} failed to upload, error message: {1}",
+
+    "ldgGist.null":""
+}

@@ -1,12 +1,6 @@
-[comment]: <> (语义化版本 2.0.0 https://semver.org/lang/zh-CN/)
-[comment]: <> (如何维护更新日志 https://keepachangelog.com/zh-CN/1.0.0/)
+[comment]: <> (语义化版本 2.0.0 https://semver.org/lang/zh-CN/) [comment]: <> (如何维护更新日志 https://keepachangelog.com/zh-CN/1.0.0/)
 
-[comment]: <> (Added 新添加的功能。)
-[comment]: <> (Changed 对现有功能的变更。)
-[comment]: <> (Deprecated 已经不建议使用，准备很快移除的功能。)
-[comment]: <> (Removed 已经移除的功能。)
-[comment]: <> (Fixed 对bug的修复)
-[comment]: <> (Security 对安全的改进)
+[comment]: <> (Added 新添加的功能。) [comment]: <> (Changed 对现有功能的变更。) [comment]: <> (Deprecated 已经不建议使用，准备很快移除的功能。) [comment]: <> (Removed 已经移除的功能。) [comment]: <> (Fixed 对 bug 的修复) [comment]: <> (Security 对安全的改进)
 
 # 更新日志
 
@@ -14,9 +8,16 @@
 
 ## [Unreleased]
 
-- 完成预期的获取列表和保存列表
+-   暂无
+## [0.0.2] - 2022-04-05
 
-## [0.0.1] - 2014-05-31
+### Added
+- 补充Logo
+- 增加演示动图
+### Fixed
+- 修复文档中连接的错误
+
+## [0.0.1] - 2022-04-05
 
 ### Added
 
@@ -37,6 +38,6 @@
     -   修改评论
     -   删除评论
 
-[Unreleased]: https://github.com/wanglong126/gitee_gists/compare/v1.0.0...HEAD
-[0.0.2]: https://github.com/wanglong126/gitee_gists/compare/v0.0.1...v0.0.2
-[0.0.1]: https://github.com/wanglong126/gitee_gists/releases/tag/v0.0.1
+[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v1.0.0...HEAD
+[0.0.2]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.1...v0.0.2
+[0.0.1]: https://github.com/wanglong126/vscode-ldggist/releases/tag/v0.0.1

@@ -3,19 +3,27 @@
 > 基于 `Gitee 和 GitHub` 的代码片段管理工具
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/wanglong126/vscode-ldggist/master/resources/logo.png" alt="">
+  <img src="https://raw.githubusercontent.com/wanglong126/vscode-ldggist/main/resources/logo.png" alt="">
 </p>
+
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=wanglong126.vscode-ldggist">
-    <img src="https://img.shields.io/visual-studio-marketplace/d/wanglong126.vscode-ldggist.svg?style=flat-square" alt="">
+  <a href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist">
+    <img src="https://img.shields.io/visual-studio-marketplace/d/itldg.ldgGist.svg?style=flat-square" alt="">
   </a>
-  <a href="https://github.com/wanglong126/vscode-ldggist/blob/master/LICENSE">
+  <a href="https://github.com/wanglong126/vscode-ldggist/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/wanglong126/vscode-ldggist.svg?style=flat-square" alt="">
   </a>
 </p>
 
 ## 快速开始
 
+### 创建代码片段
+
+![demo_create](https://raw.githubusercontent.com/wanglong126/vscode-ldggist/main/docs/gifs/create.gif)
+
+### 删除文件或代码片段
+
+![demo_delete](https://raw.githubusercontent.com/wanglong126/vscode-ldggist/main/docs/gifs/delete.gif)
 ## 功能
 
 -   代码片段

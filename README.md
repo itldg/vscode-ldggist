@@ -81,4 +81,8 @@
 
 希望各位大佬可以协助添砖加瓦，让其更加完善
 
+开源地址：[GitHub](https://github.com/wanglong126/vscode-ldggist)    |   [Gitee](https://gitee.com/diycms/vscode-ldggist)
+
+商店下载：[VS Marketplace](https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist)
+
 **Enjoy!**

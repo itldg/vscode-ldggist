@@ -11,7 +11,7 @@ const gist = new GistApi();
 var lastToken: string = '';
 export function activate(context: vscode.ExtensionContext) {
 	console.log(`${pluginName}  activate`);
-	registerCommand(context, "login", () => { setToken(); vscode.commands.executeCommand(`${pluginName}.refreshGists`); vscode.commands.executeCommand(`${pluginName}.refreshPublicGists`); });
+	registerCommand(context, "login", setToken);
 	registerCommandOneArg(context, "selectedGist", async (id: string) => {
 		if (gist.currId === id) { return; }
 		gist.currId = id; gist.getCommits(); gist.getComments();
@@ -66,6 +66,7 @@ async function setToken(): Promise<boolean> {
 	if (token) {
 		await vscode.workspace.getConfiguration(pluginName).update('accessToken', token);
 		checkType(token);
+		vscode.commands.executeCommand(`${pluginName}.refreshGists`); vscode.commands.executeCommand(`${pluginName}.refreshPublicGists`); 
 		return true;
 	}
 	return false;

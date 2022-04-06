@@ -1,14 +1,17 @@
-[comment]: <> (语义化版本 2.0.0 https://semver.org/lang/zh-CN/) [comment]: <> (如何维护更新日志 https://keepachangelog.com/zh-CN/1.0.0/)
-
-[comment]: <> (Added 新添加的功能。) [comment]: <> (Changed 对现有功能的变更。) [comment]: <> (Deprecated 已经不建议使用，准备很快移除的功能。) [comment]: <> (Removed 已经移除的功能。) [comment]: <> (Fixed 对 bug 的修复) [comment]: <> (Security 对安全的改进)
-
 # 更新日志
 
 > 记录程序的版本变更历程
 
 ## [Unreleased]
 
--   暂无
+- 列表搜索代码片段
+
+## [0.0.3] - 2022-04-06
+
+### Added
+- 简介增加一些常用图标
+- 更换令牌后自动刷新数据
+
 ## [0.0.2] - 2022-04-05
 
 ### Added
@@ -38,6 +41,7 @@
     -   修改评论
     -   删除评论
 
-[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.3...HEAD
+[0.0.3]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/wanglong126/vscode-ldggist/releases/tag/v0.0.1

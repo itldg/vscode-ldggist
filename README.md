@@ -1,19 +1,26 @@
 # LdgGist
 
-> 基于 `Gitee 和 GitHub` 的代码片段管理工具
+> 基于 `Gitee` 和 `GitHub` 的代码片段管理工具
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/wanglong126/vscode-ldggist/main/resources/logo.png" alt="">
 </p>
 
 <p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist&ssr=false#version-history">
+    <img src="https://vsmarketplacebadge.apphb.com/version-short/itldg.ldgGist.svg?color=blue&style=?style=for-the-badge&logo=visual-studio-code" alt="">
+  </a>
   <a href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist">
-    <img src="https://img.shields.io/visual-studio-marketplace/d/itldg.ldgGist.svg?style=flat-square" alt="">
+    <img src="https://vsmarketplacebadge.apphb.com/installs-short/itldg.ldgGist.svg" alt="">
+  </a>
+    <a href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist&ssr=false#review-details">
+    <img src="https://vsmarketplacebadge.apphb.com/rating-short/itldg.ldgGist.svg?color=blue" alt="">
   </a>
   <a href="https://github.com/wanglong126/vscode-ldggist/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/wanglong126/vscode-ldggist.svg?style=flat-square" alt="">
+    <img src="https://img.shields.io/github/license/wanglong126/vscode-ldggist.svg" alt="">
   </a>
 </p>
+
 
 ## 快速开始
 

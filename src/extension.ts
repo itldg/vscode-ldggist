@@ -64,10 +64,14 @@ async function checkConfig() {
 async function setToken(): Promise<boolean> {
 	const token = await vscode.window.showInputBox({ placeHolder: localize(`${pluginName}.fillToken`), value: lastToken });
 	if (token) {
-		await vscode.workspace.getConfiguration(pluginName).update('accessToken', token);
-		checkType(token);
-		vscode.commands.executeCommand(`${pluginName}.refreshGists`); vscode.commands.executeCommand(`${pluginName}.refreshPublicGists`); 
-		return true;
+		try {
+			await vscode.workspace.getConfiguration(pluginName).update('accessToken', token);	
+			checkType(token);
+			vscode.commands.executeCommand(`${pluginName}.refreshGists`); vscode.commands.executeCommand(`${pluginName}.refreshPublicGists`); 
+			return true;
+		} catch (error:any) {
+			vscode.window.showWarningMessage(error.message);
+		}
 	}
 	return false;
 }
@@ -82,8 +86,6 @@ function registerCommand(context: vscode.ExtensionContext, name: string, callbac
 	let disposable = vscode.commands.registerCommand(`${pluginName}.${name}`, async (...args: any) => {
 		if (name === "login" || await checkConfig()) {
 			callback(args);
-		} else {
-			vscode.window.showInformationMessage(localize(`%${pluginName}.tokenFillCanceled%`));
 		}
 	});
 	context.subscriptions.push(disposable);
@@ -92,9 +94,7 @@ function registerCommandOneArg(context: vscode.ExtensionContext, name: string, c
 	let disposable = vscode.commands.registerCommand(`${pluginName}.${name}`, async (arg: any) => {
 		if (name === "login" || await checkConfig()) {
 			callback(arg);
-		} else {
-			vscode.window.showInformationMessage(localize(`%${pluginName}.tokenFillCanceled%`));
-		}
+		} 
 	});
 	context.subscriptions.push(disposable);
 }

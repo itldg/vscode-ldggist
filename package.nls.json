@@ -3,7 +3,6 @@
     "ldgGist.login":"Set access token",
     "ldgGist.fillToken":"Please fill in Access_token",
     "ldgGist.noTokenMsg": "You have not configured access_token, please enter access_token in the input box to continue.",
-    "ldgGist.tokenFillCanceled":"Token fill in canceled",
     "ldgGist.gists":"Gists",
     "ldgGist.commits":"Commits",
     "ldgGist.comments":"Comments",

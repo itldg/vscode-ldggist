@@ -6,6 +6,17 @@
 
 - 列表搜索代码片段
 
+## [0.0.4] - 2022-04-06
+
+### Added
+- 增加非工作区修改配置的警告提示
+
+### Fixed
+- 一处文档翻译的错误
+
+### Removed
+- 取消填写token的提示
+
 ## [0.0.3] - 2022-04-06
 
 ### Added
@@ -41,7 +52,8 @@
     -   修改评论
     -   删除评论
 
-[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.3...HEAD
+[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.4...HEAD
+[0.0.4]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/wanglong126/vscode-ldggist/releases/tag/v0.0.1

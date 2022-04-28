@@ -6,6 +6,11 @@
 
 - 列表搜索代码片段
 
+## [0.0.5] - 2022-04-28
+
+### Changed
+- 私人令牌保存到全局,不再为每个工作区单独设置
+
 ## [0.0.4] - 2022-04-19
 
 ### Added
@@ -52,7 +57,8 @@
     -   修改评论
     -   删除评论
 
-[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.4...HEAD
+[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.5...HEAD
+[0.0.5]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.1...v0.0.2

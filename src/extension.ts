@@ -65,7 +65,7 @@ async function setToken(): Promise<boolean> {
 	const token = await vscode.window.showInputBox({ placeHolder: localize(`${pluginName}.fillToken`), value: lastToken });
 	if (token) {
 		try {
-			await vscode.workspace.getConfiguration(pluginName).update('accessToken', token);	
+			await vscode.workspace.getConfiguration(pluginName).update('accessToken', token,vscode.ConfigurationTarget.Global);
 			checkType(token);
 			vscode.commands.executeCommand(`${pluginName}.refreshGists`); vscode.commands.executeCommand(`${pluginName}.refreshPublicGists`); 
 			return true;

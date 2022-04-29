@@ -498,7 +498,7 @@ export default class GistServer {
             try {
                 // 检测文件是否已存在
                 fs.accessSync(filePath);
-                agreement = "file://";
+                agreement = "file:";
             } catch (error) {
                 agreement = "untitled:";
             }

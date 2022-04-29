@@ -6,6 +6,15 @@
 
 - 列表搜索代码片段
 
+## [0.0.6] - 2022-04-29
+
+### Changed
+- 允许在非信任工作区使用该插件
+- Gist文件使用自身文件类型图标
+
+### Fixed
+- 修复某些情况下无法打开Gist文件
+
 ## [0.0.5] - 2022-04-28
 
 ### Changed
@@ -57,7 +66,8 @@
     -   修改评论
     -   删除评论
 
-[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.5...HEAD
+[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.6...HEAD
+[0.0.6]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.5...v0.0.6
 [0.0.5]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.2...v0.0.3

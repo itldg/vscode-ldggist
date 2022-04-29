@@ -44,6 +44,7 @@ export class GistFileTreeItem extends TreeItem {
     constructor(info: GistFile, filename:string, gist: Gist) {
         super(filename, TreeItemCollapsibleState.None);
         this.description = info.language ? info.language :Util.byteConvert( <number>info.size);
+        this.resourceUri=Uri.parse(filename);
         this.gist=gist;
         this.command={
             title: String(filename),
@@ -54,7 +55,7 @@ export class GistFileTreeItem extends TreeItem {
             ]
         };
     }
-    iconPath = new ThemeIcon('file-code');
+    iconPath = ThemeIcon.File;
     contextValue = "gistFile";
 }
 

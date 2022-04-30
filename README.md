@@ -7,17 +7,21 @@
 </p>
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist&ssr=false#version-history">
+  <a target="_blank" href='https://gitee.com/diycms/vscode-ldggist/stargazers'><img src='https://gitee.com/diycms/vscode-ldggist/badge/star.svg' alt='star'></img></a>
+  <a href="https://github.com/wanglong126/ldggist/stargazers" target="_blank">
+    <img alt="GitHub" src="https://img.shields.io/github/stars/wanglong126/ldggist?label=Stars&logo=GitHub">
+  </a>
+  <a target="_blank" href="https://github.com/wanglong126/vscode-ldggist/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/wanglong126/vscode-ldggist.svg" alt="">
+  </a>
+  <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist&ssr=false#version-history">
     <img src="https://vsmarketplacebadge.apphb.com/version-short/itldg.ldgGist.svg?color=blue&style=?style=for-the-badge&logo=visual-studio-code" alt="">
   </a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist">
+  <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist">
     <img src="https://vsmarketplacebadge.apphb.com/installs-short/itldg.ldgGist.svg" alt="">
   </a>
-    <a href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist&ssr=false#review-details">
+  <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist&ssr=false#review-details">
     <img src="https://vsmarketplacebadge.apphb.com/rating-short/itldg.ldgGist.svg?color=blue" alt="">
-  </a>
-  <a href="https://github.com/wanglong126/vscode-ldggist/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/wanglong126/vscode-ldggist.svg" alt="">
   </a>
 </p>
 

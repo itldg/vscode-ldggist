@@ -10,6 +10,7 @@ import {
     ProgressLocation,
     TextEditor,
 } from "vscode";
+import {EXTENSION_NAME} from "../constants";
 
 import Gitee from "./gitee";
 import Github from "./github";
@@ -32,7 +33,6 @@ interface QuickPickItemAction extends QuickPickItem {
 }
 
 export default class GistServer {
-    private pluginName: string = "ldgGist";
     private cache: string = `${os.homedir()}/.vscodeGist`;
     private quickPick: QuickPick<QuickPickItemAction> = window.createQuickPick();
     private limit: number = 20;
@@ -89,12 +89,12 @@ export default class GistServer {
     public async createBySelect() {
         const edit = window.activeTextEditor;
         if (!edit) {
-            window.showErrorMessage(localize(`${this.pluginName}.noSelected`));
+            window.showErrorMessage(localize(`${EXTENSION_NAME}.noSelected`));
             return;
         }
-        const description = await window.showInputBox({ placeHolder: localize(`${this.pluginName}.gistDescription`) }) || "";
-        const fileName = await window.showInputBox({ placeHolder: localize(`${this.pluginName}.fileName`) }) || "";
-        const ispublic = await window.showInputBox({ placeHolder: localize(`${this.pluginName}.isPublic`) }) || "";
+        const description = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistDescription`) }) || "";
+        const fileName = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.fileName`) }) || "";
+        const ispublic = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.isPublic`) }) || "";
         await this.create(description, fileName, edit.document.getText(edit.selection), ispublic);
     }
 
@@ -106,14 +106,14 @@ export default class GistServer {
         try {
             const content = (await fs.promises.readFile(filePath)).toString();
             if (content === "") {
-                window.showErrorMessage(localize(`${this.pluginName}.fileContentEmptyError`));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.fileContentEmptyError`));
                 return;
             }
-            const description = await window.showInputBox({ placeHolder: localize(`${this.pluginName}.gistDescription`) }) || "";
-            const ispublic = await window.showInputBox({ placeHolder: localize(`${this.pluginName}.isPublic`) }) || "";
+            const description = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistDescription`) }) || "";
+            const ispublic = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.isPublic`) }) || "";
             await this.create(description, path.basename(filePath), content, ispublic);
         } catch (error) {
-            window.showErrorMessage(localize(`${this.pluginName}.upFileError`, filePath, <string>error));
+            window.showErrorMessage(localize(`${EXTENSION_NAME}.upFileError`, filePath, <string>error));
         }
     }
 
@@ -123,10 +123,10 @@ export default class GistServer {
     public async addBySelect() {
         const edit = window.activeTextEditor;
         if (!edit) {
-            window.showErrorMessage(localize(`${this.pluginName}.noSelected`));
+            window.showErrorMessage(localize(`${EXTENSION_NAME}.noSelected`));
             return;
         }
-        const fileName = await window.showInputBox({ placeHolder: localize(`${this.pluginName}.fileName`) }) || "";
+        const fileName = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.fileName`) }) || "";
         await this.add(fileName, edit.document.getText(edit.selection));
     }
 
@@ -139,12 +139,12 @@ export default class GistServer {
         try {
             const content = (await fs.promises.readFile(filePath)).toString();
             if (content === "") {
-                window.showErrorMessage(localize(`${this.pluginName}.fileContentEmptyError`));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.fileContentEmptyError`));
                 return;
             }
             await this.add(path.basename(filePath), content);
         } catch (error) {
-            window.showErrorMessage(localize(`${this.pluginName}.upFileError`, filePath, <string>error));
+            window.showErrorMessage(localize(`${EXTENSION_NAME}.upFileError`, filePath, <string>error));
         }
     }
 
@@ -152,18 +152,18 @@ export default class GistServer {
      * 删除一个代码片段
      */
     public async delete(element: GistTreeItem) {
-        const result = await window.showWarningMessage(localize(`${this.pluginName}.gistDeleteConfirm`, <string>element.label), localize(`${this.pluginName}.confirm`), localize(`${this.pluginName}.cancel`));
-        if (result !== localize(`${this.pluginName}.confirm`)) {
+        const result = await window.showWarningMessage(localize(`${EXTENSION_NAME}.gistDeleteConfirm`, <string>element.label), localize(`${EXTENSION_NAME}.confirm`), localize(`${EXTENSION_NAME}.cancel`));
+        if (result !== localize(`${EXTENSION_NAME}.confirm`)) {
             return;
         }
-        this.executeCommandWithProgress(localize(`${this.pluginName}.gistDeleteProgress`, <string>element.label), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistDeleteProgress`, <string>element.label), async () => {
             try {
                 await this.api.delete(element.id || "");
-                window.setStatusBarMessage(localize(`${this.pluginName}.gistDeleteSuccess`, <string>element.label),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistDeleteSuccess`, <string>element.label),3000);
                 this.gistTreeDataProvider.removeGist(<string>element.id);
                 this.getNew();
             } catch (error) {
-                window.showErrorMessage(localize(`${this.pluginName}.gistDeleteError`, <string>element.label, <string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistDeleteError`, <string>element.label, <string>error));
             }
         });
 
@@ -174,17 +174,17 @@ export default class GistServer {
      */
     public async deleteFile(element: GistFileTreeItem) {
         const fileName = <string>element.label;
-        const result = await window.showWarningMessage(localize(`${this.pluginName}.gistFileDeleteConfirm`, <string>element.gist.description, <string>fileName), localize(`${this.pluginName}.confirm`), localize(`${this.pluginName}.cancel`));
-        if (result !== localize(`${this.pluginName}.confirm`)) {
+        const result = await window.showWarningMessage(localize(`${EXTENSION_NAME}.gistFileDeleteConfirm`, <string>element.gist.description, <string>fileName), localize(`${EXTENSION_NAME}.confirm`), localize(`${EXTENSION_NAME}.cancel`));
+        if (result !== localize(`${EXTENSION_NAME}.confirm`)) {
             return;
         }
-        this.executeCommandWithProgress(localize(`${this.pluginName}.gistFileDeleteProgress`, <string>element.gist.description, <string>fileName), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistFileDeleteProgress`, <string>element.gist.description, <string>fileName), async () => {
             try {
                 await this.api.deleteFile(element.gist.id || "", fileName);
-                window.setStatusBarMessage(localize(`${this.pluginName}.gistFileDeleteSuccess`, <string>element.gist.description, <string>fileName),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistFileDeleteSuccess`, <string>element.gist.description, <string>fileName),3000);
                 this.getNew();
             } catch (error) {
-                window.showErrorMessage(localize(`${this.pluginName}.gistFileDeleteError`, <string>element.gist.description, <string>fileName, <string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistFileDeleteError`, <string>element.gist.description, <string>fileName, <string>error));
             }
         });
     }
@@ -198,7 +198,7 @@ export default class GistServer {
      * 获取个人的代码片段
      */
     public async getList(page: number = 1,since: string = "") {
-        this.executeCommandWithProgress(localize(`${this.pluginName}.getListProgress`, page.toString(), localize(`${this.pluginName}.gists`)), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.getListProgress`, page.toString(), localize(`${EXTENSION_NAME}.gists`)), async () => {
             try {
                 let gistList = await this.api.getList(this.limit, page, since);
                 if (gistList.length > 0) {
@@ -226,7 +226,7 @@ export default class GistServer {
                 }
 
             } catch (error) {
-                window.showErrorMessage(localize(`${this.pluginName}.getListError`, page.toString(), localize(`${this.pluginName}.gists`), <string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.getListError`, page.toString(), localize(`${EXTENSION_NAME}.gists`), <string>error));
             }
         });
     }
@@ -237,7 +237,7 @@ export default class GistServer {
         if (this.tokenType === "gitee") {
             return;
         }
-        this.executeCommandWithProgress(localize(`${this.pluginName}.getListProgress`, page.toString(), localize(`${this.pluginName}.publicGists`)), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.getListProgress`, page.toString(), localize(`${EXTENSION_NAME}.publicGists`)), async () => {
             try {
                 let gistList = await this.api.getPublicList(this.limit, page);
                 if (page === 1) {
@@ -249,7 +249,7 @@ export default class GistServer {
                     //this.getPublicList((page + 1));
                 }
             } catch (error) {
-                window.showErrorMessage(localize(`${this.pluginName}.getListError`, page.toString(), localize(`${this.pluginName}.publicGists`), <string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.getListError`, page.toString(), localize(`${EXTENSION_NAME}.publicGists`), <string>error));
             }
         });
     }
@@ -263,7 +263,7 @@ export default class GistServer {
     public async edit() {
         const edit = window.activeTextEditor;
         if (!edit) {
-            window.showErrorMessage(localize(`${this.pluginName}.gistNotOpen`));
+            window.showErrorMessage(localize(`${EXTENSION_NAME}.gistNotOpen`));
             return;
         }
         const docPath = path.resolve(edit.document.uri.fsPath);
@@ -272,20 +272,20 @@ export default class GistServer {
 
         // 判断当前文档的路径是否为代码片段存储目录
         if (savePath.toLocaleLowerCase() !== docDir.toLocaleLowerCase()) {
-            window.showErrorMessage(localize(`${this.pluginName}.documentIsNotOperate`, savePath, docDir));
+            window.showErrorMessage(localize(`${EXTENSION_NAME}.documentIsNotOperate`, savePath, docDir));
             return;
         }
         try {
             const fileName = path.basename(docPath);
             const gist = await this.api.getSingle(path.basename(path.dirname(docPath)));
-            const description = await window.showInputBox({ placeHolder: localize(`${this.pluginName}.gistEditPlaceHolder`, gist.description) }) || gist.description;
+            const description = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistEditPlaceHolder`, gist.description) }) || gist.description;
             gist.files[fileName].content = edit.document.getText();
             gist.description = description;
             await this.api.edit(gist);
-            window.setStatusBarMessage(localize(`${this.pluginName}.gistEditSuccess`, description, fileName),3000);
+            window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistEditSuccess`, description, fileName),3000);
             this.getNew();
         } catch (error) {
-            window.showErrorMessage(localize(`${this.pluginName}.gistEditError`, <string>error));
+            window.showErrorMessage(localize(`${EXTENSION_NAME}.gistEditError`, <string>error));
         }
     }
 
@@ -297,10 +297,10 @@ export default class GistServer {
      * @param isPublic 是否公开
      */
     private async create(description: string, fileName: string, content: string, isPublic: string) {
-        this.executeCommandWithProgress(localize(`${this.pluginName}.gistCreateProgress`, description), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistCreateProgress`, description), async () => {
             try {
                 if (content === "") {
-                    window.showErrorMessage(localize(`${this.pluginName}.gistCreateError`, description, localize(`${this.pluginName}.contentEmptyError`)));
+                    window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCreateError`, description, localize(`${EXTENSION_NAME}.contentEmptyError`)));
                     return;
                 }
                 await this.api.create({
@@ -310,10 +310,10 @@ export default class GistServer {
                         [fileName]: { content },
                     },
                 });
-                window.setStatusBarMessage(localize(`${this.pluginName}.gistCreateSuccess`, description),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCreateSuccess`, description),3000);
                 this.getNew();
             } catch (error) {
-                window.showErrorMessage(localize(`${this.pluginName}.gistCreateError`, description, <string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCreateError`, description, <string>error));
             }
         });
     }
@@ -322,20 +322,20 @@ export default class GistServer {
      * 将文件添加到已有的代码片段
      */
     private async add(fileName: string, content: string) {
-        this.selectItem([], localize(`${this.pluginName}.loading`));
+        this.selectItem([], localize(`${EXTENSION_NAME}.loading`));
         const gistList = await this.gistTreeDataProvider.itemData;
         const itemList: QuickPickItemAction[] = [];
         for (const gist of gistList) {
             gist.files = gist.files || [];
             itemList.push({
-                description: localize(`${this.pluginName}.fileCount`, Object.keys(gist.files).length.toString()),
+                description: localize(`${EXTENSION_NAME}.fileCount`, Object.keys(gist.files).length.toString()),
                 label: gist.description,
                 action: async (item: QuickPickItemAction) => {
-                    this.executeCommandWithProgress(localize(`${this.pluginName}.gistAddProgress`, fileName, gist.description), async () => {
+                    this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistAddProgress`, fileName, gist.description), async () => {
                         try {
                             if (gist.files[fileName]) {
-                                const result = await window.showWarningMessage(localize(`${this.pluginName}.gistAddConfirm`, fileName, gist.description), localize(`${this.pluginName}.confirm`), localize(`${this.pluginName}.cancel`));
-                                if (result !== localize(`${this.pluginName}.confirm`)) {
+                                const result = await window.showWarningMessage(localize(`${EXTENSION_NAME}.gistAddConfirm`, fileName, gist.description), localize(`${EXTENSION_NAME}.confirm`), localize(`${EXTENSION_NAME}.cancel`));
+                                if (result !== localize(`${EXTENSION_NAME}.confirm`)) {
                                     return;
                                 }
                             }
@@ -343,17 +343,17 @@ export default class GistServer {
                                 [fileName]: { content },
                             };
                             await this.api.edit(gist);
-                            window.setStatusBarMessage(localize(`${this.pluginName}.gistAddSuccess`, fileName, gist.description),3000);
+                            window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistAddSuccess`, fileName, gist.description),3000);
                             this.getNew();
                         } catch (error) {
-                            window.showErrorMessage(localize(`${this.pluginName}.gistAddError`, fileName, gist.description, <string>error));
+                            window.showErrorMessage(localize(`${EXTENSION_NAME}.gistAddError`, fileName, gist.description, <string>error));
                         }
                         this.quickPick.hide();
                     });
                 },
             });
         }
-        this.selectItem(itemList, localize(`${this.pluginName}.select`, localize(`${this.pluginName}.gists`)));
+        this.selectItem(itemList, localize(`${EXTENSION_NAME}.select`, localize(`${EXTENSION_NAME}.gists`)));
     }
 
     /**获取代码片段的提交记录
@@ -363,12 +363,12 @@ export default class GistServer {
         if (this.tokenType === "gitee" || this.currId === '') {
             return;
         }
-        this.executeCommandWithProgress(localize(`${this.pluginName}.gistCommitsProgress`), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistCommitsProgress`), async () => {
             try {
                 let commitList = await this.api.getCommits(this.currId);
                 this.gistCommits?.setData(commitList.map(item => { return new GistCommitTreeItem(item); }));
             } catch (error) {
-                window.showErrorMessage(localize(`${this.pluginName}.gistCommitsError`, <string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommitsError`, <string>error));
             }
         });
     }
@@ -380,12 +380,12 @@ export default class GistServer {
         if (this.currId === '') {
             return;
         }
-        this.executeCommandWithProgress(localize(`${this.pluginName}.gistCommentsProgress`), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistCommentsProgress`), async () => {
             try {
                 let commentList = await this.api.getComments(this.currId, page);
                 this.gistComments?.setData(commentList.map(item => { return new GistCommentTreeItem(item); }));
             } catch (error) {
-                window.showErrorMessage(localize(`${this.pluginName}.gistCommentsError`,<string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentsError`,<string>error));
             }
         });
     }
@@ -397,15 +397,15 @@ export default class GistServer {
      */
     public async addComment() {
         if (!this.checkCurrId()) { return; }
-        const body = await window.showInputBox({ placeHolder: localize(`${this.pluginName}.gistCommentCreatePlaceHolder`) });
+        const body = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistCommentCreatePlaceHolder`) });
         if (body === undefined) { return; }
-        this.executeCommandWithProgress(localize(`${this.pluginName}.gistCommentCreateProgress`), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistCommentCreateProgress`), async () => {
             try {
                 await this.api.addComment(this.currId, body);
-                window.setStatusBarMessage(localize(`${this.pluginName}.gistCommentCreateSuccess`,body),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCommentCreateSuccess`,body),3000);
                 this.getComments();
             } catch (error) {
-                window.showErrorMessage(localize(`${this.pluginName}.gistCommentCreateError`,body,<string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentCreateError`,body,<string>error));
             }
         });
     }
@@ -417,32 +417,32 @@ export default class GistServer {
      */
     public async editComment(commentId: string, body: string) {
         if (!this.checkCurrId()) { return; }
-        const bodyNew = await window.showInputBox({ placeHolder: localize(`${this.pluginName}.gistCommentEditPlaceHolder`,body), value: body });
+        const bodyNew = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistCommentEditPlaceHolder`,body), value: body });
         if (bodyNew === undefined) { return; }
-        this.executeCommandWithProgress(localize(`${this.pluginName}.gistCommentEditProgress`), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistCommentEditProgress`), async () => {
             try {
                 await this.api.editComment(this.currId, commentId, bodyNew);
                 this.getComments();
-                window.setStatusBarMessage(localize(`${this.pluginName}.gistCommentEditSuccess`,body),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCommentEditSuccess`,body),3000);
             } catch (error) {
-                window.showErrorMessage(localize(`${this.pluginName}.gistCommentEditError`,body,<string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentEditError`,body,<string>error));
             }
         });
     }
 
     public async deleteComment(commentId: string,body:string) {
-        const result = await window.showWarningMessage(localize(`${this.pluginName}.gistCommentDeleteConfirm`, body), localize(`${this.pluginName}.confirm`), localize(`${this.pluginName}.cancel`));
-        if (result !== localize(`${this.pluginName}.confirm`)) {
+        const result = await window.showWarningMessage(localize(`${EXTENSION_NAME}.gistCommentDeleteConfirm`, body), localize(`${EXTENSION_NAME}.confirm`), localize(`${EXTENSION_NAME}.cancel`));
+        if (result !== localize(`${EXTENSION_NAME}.confirm`)) {
             return;
         }
-        this.executeCommandWithProgress(localize(`${this.pluginName}.gistCommentDeleteProgress`,body), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistCommentDeleteProgress`,body), async () => {
 
             try {
                 await this.api.deleteComment(this.currId, commentId);
                 this.getComments();
-                window.setStatusBarMessage(localize(`${this.pluginName}.gistCommentDeleteSuccess`,body),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCommentDeleteSuccess`,body),3000);
             } catch (error) {
-                window.showErrorMessage(localize(`${this.pluginName}.gistCommentDeleteError`,body,<string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentDeleteError`,body,<string>error));
             }
         });
     }
@@ -452,7 +452,7 @@ export default class GistServer {
      */
     private checkCurrId(): boolean {
         if (this.currId === '') {
-            window.setStatusBarMessage(localize(`${this.pluginName}.gistNoSelected`),3000);
+            window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistNoSelected`),3000);
             return false;
         }
         return true;
@@ -493,7 +493,7 @@ export default class GistServer {
         //避免同一个文件被多次点击
         if (this.lastFile === filePath) { return; }
         this.lastFile = filePath;
-        this.executeCommandWithProgress(localize(`${this.pluginName}.gistContentProgress`), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistContentProgress`), async () => {
             let agreement: string;
             try {
                 // 检测文件是否已存在
@@ -510,7 +510,7 @@ export default class GistServer {
             this.mkdir(filedir);
             await fs.writeFile(uri.fsPath, content, (r) => {
                 if (r !== null) {
-                    window.showErrorMessage(localize(`${this.pluginName}.fileWriteError`,r.message));
+                    window.showErrorMessage(localize(`${EXTENSION_NAME}.fileWriteError`,r.message));
                 } else {
                     window.showTextDocument(Uri.file(uri.fsPath), { preview: true, });
                 }

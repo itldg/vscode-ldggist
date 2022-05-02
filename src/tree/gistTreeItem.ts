@@ -2,8 +2,8 @@ import { Command, ThemeIcon, TreeItem, TreeItemCollapsibleState, Uri } from "vsc
 import { Gist, GistFile, GistComment, GistCommit } from "../api/gitBase";
 import { Util } from "../util";
 import localize from "../localize";
+import {EXTENSION_NAME} from "../constants";
 export class GistTreeItem extends TreeItem {
-    private pluginName: string = "ldgGist";
     public:boolean;
     constructor(info: Gist,isPublic : boolean) {
         super(info.description,(info.files?Object.keys(info.files).length:0)?TreeItemCollapsibleState.Collapsed: TreeItemCollapsibleState.None);
@@ -12,10 +12,10 @@ export class GistTreeItem extends TreeItem {
         if(isPublic)
         {
             this.tooltip = info.description;
-            this.description =localize(`${this.pluginName}.owner`)+ `: ${info.owner?.login}，`+localize(`${this.pluginName}.fileCount`,Object.keys(info.files).length.toString());
+            this.description =localize(`${EXTENSION_NAME}.owner`)+ `: ${info.owner?.login}，`+localize(`${EXTENSION_NAME}.fileCount`,Object.keys(info.files).length.toString());
 
         }else{
-            this.tooltip = ('['+localize(`${this.pluginName}.${info.public ? 'public' : 'private'}`)+']') + info.description;
+            this.tooltip = ('['+localize(`${EXTENSION_NAME}.${info.public ? 'public' : 'private'}`)+']') + info.description;
             this.iconPath = new ThemeIcon(info.public ? 'eye' : 'lock');
             if (info.html_url) {
                 this.resourceUri = Uri.parse(info.html_url);

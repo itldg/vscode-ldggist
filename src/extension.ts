@@ -5,12 +5,12 @@ import { GistCommentTreeItem, GistFileTreeItem, GistTreeItem } from './tree/gist
 import path = require('path');
 import localize from "./localize";
 import { Gist } from './api/gitBase';
-var pluginName: string = "ldgGist";
+import {EXTENSION_NAME} from './constants';
 const gist = new GistApi();
 //用于判断Token是否被修改
 var lastToken: string = '';
 export function activate(context: vscode.ExtensionContext) {
-	console.log(`${pluginName}  activate`);
+	console.log(`${EXTENSION_NAME}  activate`);
 	registerCommand(context, "login", setToken);
 	registerCommandOneArg(context, "selectedGist", async (id: string) => {
 		if (gist.currId === id) { return; }
@@ -20,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 		gist.createTextEditor(args); 
 		let gistInfo = args[0] as Gist;
 		if(!gistInfo.public){
-			vscode.commands.executeCommand(`${pluginName}.selectedGist`, args[0].id);
+			vscode.commands.executeCommand(`${EXTENSION_NAME}.selectedGist`, args[0].id);
 		}
 	});
 	registerCommandOneArg(context, "createFromFile", async ({ fsPath: path }) => gist.createByFile(path));
@@ -45,29 +45,29 @@ export function activate(context: vscode.ExtensionContext) {
 	gist.gistCommits = registerTreeDataProvider('commits');
 	gist.gistComments = registerTreeDataProvider('comments');
 
-	vscode.commands.executeCommand(`${pluginName}.refreshGists`);
-	vscode.commands.executeCommand(`${pluginName}.refreshPublicGists`);
+	vscode.commands.executeCommand(`${EXTENSION_NAME}.refreshGists`);
+	vscode.commands.executeCommand(`${EXTENSION_NAME}.refreshPublicGists`);
 
 }
 
 export function deactivate() { }
 
 async function checkConfig() {
-	let token = <string>vscode.workspace.getConfiguration(pluginName).get('accessToken');
+	let token = <string>vscode.workspace.getConfiguration(EXTENSION_NAME).get('accessToken');
 	if (!token) {
-		vscode.window.showInformationMessage(localize(`${pluginName}.noTokenMsg`));
+		vscode.window.showInformationMessage(localize(`${EXTENSION_NAME}.noTokenMsg`));
 		return await setToken();
 	}
 	checkType(token);
 	return true;
 }
 async function setToken(): Promise<boolean> {
-	const token = await vscode.window.showInputBox({ placeHolder: localize(`${pluginName}.fillToken`), value: lastToken });
+	const token = await vscode.window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.fillToken`), value: lastToken });
 	if (token) {
 		try {
-			await vscode.workspace.getConfiguration(pluginName).update('accessToken', token,vscode.ConfigurationTarget.Global);
+			await vscode.workspace.getConfiguration(EXTENSION_NAME).update('accessToken', token,vscode.ConfigurationTarget.Global);
 			checkType(token);
-			vscode.commands.executeCommand(`${pluginName}.refreshGists`); vscode.commands.executeCommand(`${pluginName}.refreshPublicGists`); 
+			vscode.commands.executeCommand(`${EXTENSION_NAME}.refreshGists`); vscode.commands.executeCommand(`${EXTENSION_NAME}.refreshPublicGists`); 
 			return true;
 		} catch (error:any) {
 			vscode.window.showWarningMessage(error.message);
@@ -79,11 +79,11 @@ async function checkType(token: string) {
 	if (lastToken !== token) {
 		lastToken = token;
 		gist.upToken(lastToken);
-		vscode.commands.executeCommand('setContext', `${pluginName}.tokenType`, gist.tokenType);
+		vscode.commands.executeCommand('setContext', `${EXTENSION_NAME}.tokenType`, gist.tokenType);
 	}
 }
 function registerCommand(context: vscode.ExtensionContext, name: string, callback: (...args: any[]) => any) {
-	let disposable = vscode.commands.registerCommand(`${pluginName}.${name}`, async (...args: any) => {
+	let disposable = vscode.commands.registerCommand(`${EXTENSION_NAME}.${name}`, async (...args: any) => {
 		if (name === "login" || await checkConfig()) {
 			callback(args);
 		}
@@ -91,7 +91,7 @@ function registerCommand(context: vscode.ExtensionContext, name: string, callbac
 	context.subscriptions.push(disposable);
 }
 function registerCommandOneArg(context: vscode.ExtensionContext, name: string, callback: (arg: any) => any) {
-	let disposable = vscode.commands.registerCommand(`${pluginName}.${name}`, async (arg: any) => {
+	let disposable = vscode.commands.registerCommand(`${EXTENSION_NAME}.${name}`, async (arg: any) => {
 		if (name === "login" || await checkConfig()) {
 			callback(arg);
 		} 

@@ -7,8 +7,8 @@
 </p>
 
 <p align="center">
-  <a target="_blank" href='https://gitee.com/diycms/vscode-ldggist/stargazers'><img src='https://gitee.com/diycms/vscode-ldggist/badge/star.svg' alt='star'></img></a>
-  <a href="https://github.com/wanglong126/ldggist/stargazers" target="_blank">
+  <a target="_blank" href='https://gitee.com/diycms/vscode-ldggist'><img src='https://img.shields.io/badge/dynamic/json?style=&label=Gitee%20stars&url=https://gitee.com/api/v5/repos/diycms/vscode-ldggist&query=$.stargazers_count' alt='star'></img></a>
+  <a href="https://github.com/wanglong126/ldggist" target="_blank">
     <img alt="GitHub" src="https://img.shields.io/github/stars/wanglong126/ldggist?label=Stars&logo=GitHub">
   </a>
   <a target="_blank" href="https://github.com/wanglong126/vscode-ldggist/blob/main/LICENSE">

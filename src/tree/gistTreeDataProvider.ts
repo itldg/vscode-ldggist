@@ -69,7 +69,7 @@ export class GistTreeDataProvider implements vscode.TreeDataProvider<vscode.Tree
             let files = Object.keys(giteeFIles);
             let children: Array<vscode.TreeItem> = [];
             for (let i = 0; i < files.length; i++) {
-                children.push(new GistFileTreeItem(giteeFIles[files[i]], files[i], gist));
+                children.push(new GistFileTreeItem(giteeFIles[files[i]]!, files[i], gist));
             }
             return children;
         } else {

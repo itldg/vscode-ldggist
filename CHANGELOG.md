@@ -6,6 +6,17 @@
 
 - 列表搜索代码片段
 
+## [0.0.7] - 2022-05-09
+
+### Changed
+- 使用`FileSystemProvider`实现代码查看和保存自动同步
+- 修改描述功能修改至列表右键菜单中
+- 代码片段文件重命名功能修改至列表右键菜单中
+
+### Removed
+- 移除缓存目录配置
+- 移除代码片段的右键菜单
+
 ## [0.0.6] - 2022-04-29
 
 ### Changed
@@ -66,7 +77,8 @@
     -   修改评论
     -   删除评论
 
-[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.6...HEAD
+[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.7...HEAD
+[0.0.6]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.5...v0.0.6
 [0.0.5]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.3...v0.0.4

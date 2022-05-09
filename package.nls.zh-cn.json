@@ -29,9 +29,10 @@
 
     "ldgGist.addFromFile": "将文件添加到已存在的代码片段",
     "ldgGist.addFromSelect": "将选中内容添加到已存在的代码片段",
-    "ldgGist.saveGistFile": "保存代码片段的修改",
 
+    "ldgGist.changeDescription": "修改描述信息",
     "ldgGist.delete": "删除代码片段",
+    "ldgGist.renameFile": "重命名文件",
     "ldgGist.deleteFile": "删除代码片段中的文件",
 
     "ldgGist.refreshGists": "刷新代码片段列表",
@@ -43,7 +44,6 @@
 
 
     "ldgGist.accessToken": "请填写 Gitee[立即创建](https://gitee.com/profile/personal_access_tokens) 或者 GitHub[立即创建](https://github.com/settings/tokens) 创建的 `私人令牌`",
-    "ldgGist.workspaceFolder": "保存临时代码的文件夹",
 
     "ldgGist.now":"刚刚",
     "ldgGist.secondsAgo":"{0} 秒钟前",
@@ -75,12 +75,18 @@
     "ldgGist.gistEditPlaceHolder":"置空表示不修改描述({0})",
     "ldgGist.gistEditProgress":"代码片段【{0}】更新中...",
     "ldgGist.gistEditSuccess":"代码片段【{0}】中的文件【{1}】已更新！",
+    "ldgGist.gistchangeDescriptionSuccess":"代码片段【{0}】描述已更新！",
     "ldgGist.gistEditError":"代码片段更新失败，错误信息：{0}",
 
     "ldgGist.gistDeleteConfirm":"确认删除代码片段【{0}】吗？",
     "ldgGist.gistDeleteProgress":"代码片段【{0}】删除中...",
     "ldgGist.gistDeleteSuccess":"代码片段【{0}】已删除！",
     "ldgGist.gistDeleteError":"代码片段【{0}】删除失败，错误信息：{1}",
+
+    "ldgGist.gistFileRenamePlaceHolder":"置空表示不修改文件名称({0})",
+    "ldgGist.gistFileRenameProgress":"文件正在重命名...",
+    "ldgGist.gistFileRenameSuccess":"文件重命名重命名成功!",
+    "ldgGist.gistFileRenameError":"文件重命名失败，错误信息：{2}",
 
     "ldgGist.gistFileDeleteConfirm":"确认从【{0}】中删除文件【{1}】吗？",
     "ldgGist.gistFileDeleteProgress":"正在从【{0}】中删除文件【{1}】...",
@@ -108,7 +114,6 @@
     "ldgGist.gistNoSelected":"请先选择一个代码片段",
     "ldgGist.noSelected":"当前未选中任何内容！",
     "ldgGist.gistNotOpen":"当前未打开任何代码片段！",
-    "ldgGist.documentIsNotOperate":"当前文档不是可操作的代码片段，期望的文档路径为{0}，当前却为{1}",
     "ldgGist.contentEmptyError":"内容不可为空！",
     "ldgGist.fileContentEmptyError":"文件内容不可为空！",
     "ldgGist.upFileError":"文件 {0} 上传失败，错误信息：{1}",

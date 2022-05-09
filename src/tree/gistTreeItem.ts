@@ -5,6 +5,7 @@ import localize from "../localize";
 import {EXTENSION_NAME} from "../constants";
 export class GistTreeItem extends TreeItem {
     public:boolean;
+    gist: Gist | undefined;
     constructor(info: Gist,isPublic : boolean) {
         super(info.description,(info.files?Object.keys(info.files).length:0)?TreeItemCollapsibleState.Collapsed: TreeItemCollapsibleState.None);
         this.label = info.description;
@@ -25,6 +26,7 @@ export class GistTreeItem extends TreeItem {
             }
         }
         this.public=isPublic;
+        this.gist=info;
         if(!isPublic)
         {
             this.command = {

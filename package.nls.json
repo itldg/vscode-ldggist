@@ -29,9 +29,10 @@
 
     "ldgGist.addFromFile": "Add to existing gist from file",
     "ldgGist.addFromSelect": "Add to existing gist from selected content",
-    "ldgGist.saveGistFile": "Save the modifications to the gist file",
 
+    "ldgGist.changeDescription": "Change Description",
     "ldgGist.delete": "Delete gist",
+    "ldgGist.renameFile": "Rename file",
     "ldgGist.deleteFile": "Deleting files in gist",
 
     "ldgGist.refreshGists": "Refresh gists",
@@ -43,7 +44,6 @@
 
 
     "ldgGist.accessToken": "GitHub[Generate token](https://github.com/settings/tokens) or Gitee[Generate token](https://gitee.com/profile/personal_access_tokens) `access token` ",
-    "ldgGist.workspaceFolder": "The path of the workspace folder to store the problem files.",
 
     "ldgGist.now":"now",
     "ldgGist.secondsAgo":"{0} seconds ago",
@@ -76,12 +76,18 @@
     "ldgGist.gistEditPlaceHolder":"When you are empty, you will not modify the description ({0})",
     "ldgGist.gistEditProgress":"Gist [{0}] updating...",
     "ldgGist.gistEditSuccess":"The file in the gist [{0}] [{1}] is updated!",
+    "ldgGist.gistchangeDescriptionSuccess":"Code Snippet [{0}] Description updated!",
     "ldgGist.gistEditError":"Gist update failure,error message:{0}",
 
     "ldgGist.gistDeleteConfirm":"Confirm to delete gist fragment [{0}]?",
     "ldgGist.gistDeleteProgress":"Gist [{0}] deleting...",
     "ldgGist.gistDeleteSuccess":"Gist [{0}] deleted",
     "ldgGist.gistDeleteError":"Gist [{0}] delete failed,error message:{1}",
+
+    "ldgGist.gistFileRenamePlaceHolder":"When you are empty, you will not modify thename ({0})",
+    "ldgGist.gistFileRenameProgress":"Renaming file...",
+    "ldgGist.gistFileRenameSuccess":"Successfully renaming file!",
+    "ldgGist.gistFileRenameError":"Renaming file failed, error message: {2}",
 
     "ldgGist.gistFileDeleteConfirm":"Confirm to delete gist file fragment [{0}]?",
     "ldgGist.gistFileDeleteProgress":"Remove files from [{0}] [{1}] ...",
@@ -110,7 +116,6 @@
     "ldgGist.gistNoSelected":"Please select a gist first",
     "ldgGist.noSelected":"Nothing is currently selected!",
     "ldgGist.gistNotOpen":"File is not open!",
-    "ldgGist.documentIsNotOperate":"The current document is not an operational code snippet, the expected document path is {0}, currently {1}",
     "ldgGist.contentEmptyError":"The content can not be empty!",
     "ldgGist.fileContentEmptyError":"The contents of the file must not be empty!",
     "ldgGist.upFileError":"File {0} failed to upload, error message: {1}",

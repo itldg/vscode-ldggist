@@ -3,7 +3,7 @@
 	"displayName": "LdgGist",
 	"publisher": "itldg",
 	"description": "基于Gitee和GitHub的代码片段管理工具",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"icon": "resources/logo.png",
 	"engines": {
 		"vscode": "^1.65.0"
@@ -13,7 +13,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"*"
+		"*",
+		"onFileSystem:ldggist"
 	],
 	"keywords": [
 		"代码片段",
@@ -118,14 +119,17 @@
 				"icon": "$(file-add)"
 			},
 			{
-				"command": "ldgGist.saveGistFile",
-				"title": "%ldgGist.saveGistFile%",
-				"icon": "$(save)"
+				"command": "ldgGist.changeDescription",
+				"title": "%ldgGist.changeDescription%"
 			},
 			{
 				"command": "ldgGist.delete",
 				"title": "%ldgGist.delete%",
 				"icon": "$(trash)"
+			},
+			{
+				"command": "ldgGist.renameFile",
+				"title": "%ldgGist.renameFile%"
 			},
 			{
 				"command": "ldgGist.deleteFile",
@@ -207,9 +211,19 @@
 			],
 			"view/item/context": [
 				{
+					"command": "ldgGist.changeDescription",
+					"when": "view == gists && viewItem == gist",
+					"group": "base@1"
+				},
+				{
 					"command": "ldgGist.delete",
 					"when": "view == gists && viewItem == gist",
 					"group": "inline"
+				},
+				{
+					"command": "ldgGist.renameFile",
+					"when": "view == gists && viewItem == gistFile",
+					"group": "base@1"
 				},
 				{
 					"command": "ldgGist.deleteFile",
@@ -234,11 +248,6 @@
 				"ldgGist.accessToken": {
 					"type": "string",
 					"markdownDescription": "%ldgGist.accessToken%",
-					"default": ""
-				},
-				"ldgGist.workspaceFolder": {
-					"type": "string",
-					"description": "%ldgGist.workspaceFolder%",
 					"default": ""
 				}
 			}

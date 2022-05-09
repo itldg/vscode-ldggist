@@ -7,21 +7,18 @@
 </p>
 
 <p align="center">
-  <a target="_blank" href='https://gitee.com/diycms/vscode-ldggist'><img src='https://img.shields.io/badge/dynamic/json?style=&label=Gitee%20stars&url=https://gitee.com/api/v5/repos/diycms/vscode-ldggist&query=$.stargazers_count' alt='star'></img></a>
+  <a target="_blank" href='https://gitee.com/diycms/vscode-ldggist'><img src='https://img.shields.io/badge/dynamic/json?logo=Gitee&logoColor=C71D23&label=Stars&url=https://gitee.com/api/v5/repos/diycms/vscode-ldggist&query=$.stargazers_count' alt='star'></img></a>
   <a href="https://github.com/wanglong126/ldggist" target="_blank">
     <img alt="GitHub" src="https://img.shields.io/github/stars/wanglong126/ldggist?label=Stars&logo=GitHub">
-  </a>
-  <a target="_blank" href="https://github.com/wanglong126/vscode-ldggist/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/wanglong126/vscode-ldggist.svg" alt="">
   </a>
   <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist&ssr=false#version-history">
     <img src="https://vsmarketplacebadge.apphb.com/version-short/itldg.ldgGist.svg?color=blue&style=?style=for-the-badge&logo=visual-studio-code" alt="">
   </a>
-  <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist">
-    <img src="https://vsmarketplacebadge.apphb.com/installs-short/itldg.ldgGist.svg" alt="">
-  </a>
   <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist&ssr=false#review-details">
     <img src="https://vsmarketplacebadge.apphb.com/rating-short/itldg.ldgGist.svg?color=blue" alt="">
+  </a>
+  <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist">
+    <img src="https://vsmarketplacebadge.apphb.com/installs-short/itldg.ldgGist.svg" alt="">
   </a>
 </p>
 
@@ -44,9 +41,11 @@
     -   用选中内容创建代码片段
     -   将文件添加到已存在的代码片段
     -   将选中内容添加到已存在的代码片段
+    -   修改描述
     -   编辑代码片段
     -   删除代码片段
     -   删除代码片段中的文件
+    -   代码片段文件重命名
     -   代码片段发生改变后局部刷新
 -   代码片段历史  [Gitee测试未返回正确结果](https://gitee.com/oschina/git-osc/issues/I5072D)
 -   代码片段评论
@@ -78,6 +77,12 @@
 ## 开发初衷
 
 希望可以摆脱文档记录常用代码的方式，在常用的代码编辑器中直接使用和修改常用的代码片段，感觉上美滋滋
+
+## 常见问题
+
+### 如何取消自动保存代码片段
+
+修改设置`Auto Save`选择为`off`
 
 ## 开源
 

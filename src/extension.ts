@@ -5,19 +5,33 @@ import { GistCommentTreeItem, GistFileTreeItem, GistTreeItem } from './tree/gist
 import path = require('path');
 import localize from "./localize";
 import { Gist } from './api/gitBase';
-import {EXTENSION_NAME} from './constants';
+import {EXTENSION_NAME, FS_SCHEME} from './constants';
+import { GistFs } from './provider/gistSystemProvider';
+
 const gist = new GistApi();
+const gf=new GistFs(gist);
+vscode.workspace.registerFileSystemProvider(FS_SCHEME, gf);
+
 //用于判断Token是否被修改
 var lastToken: string = '';
 export function activate(context: vscode.ExtensionContext) {
 	console.log(`${EXTENSION_NAME}  activate`);
+	gf.onDidChangeFile(e => {
+		console.log('change',JSON.stringify( e));
+		if(e.length===1)
+		{
+			gist.edit();
+		}
+	});
 	registerCommand(context, "login", setToken);
 	registerCommandOneArg(context, "selectedGist", async (id: string) => {
 		if (gist.currId === id) { return; }
 		gist.currId = id; gist.getCommits(); gist.getComments();
 	});
 	registerCommand(context, "openCode", async (args: any[]) => { 
-		gist.createTextEditor(args); 
+		let gist = args[0] as Gist;
+        let fileName = args[1] as string;
+		gf.openGist(<string>gist.id, fileName);
 		let gistInfo = args[0] as Gist;
 		if(!gistInfo.public){
 			vscode.commands.executeCommand(`${EXTENSION_NAME}.selectedGist`, args[0].id);
@@ -29,8 +43,9 @@ export function activate(context: vscode.ExtensionContext) {
 	registerCommandOneArg(context, "addFromFile", async ({ fsPath: path }) => gist.addByFile(path));
 	registerCommandOneArg(context, "addFromSelect", async () => gist.addBySelect());
 
-	registerCommand(context, "saveGistFile", async () => gist.edit());
+	registerCommandOneArg(context, "changeDescription", async (item: GistTreeItem) => gist.changeDescription(item));
 	registerCommandOneArg(context, "delete", async (item: GistTreeItem) => gist.delete(item));
+	registerCommandOneArg(context, "renameFile", async (item: GistFileTreeItem) => gist.renameFile(item));
 	registerCommandOneArg(context, "deleteFile", async (item: GistFileTreeItem) => gist.deleteFile(item));
 
 	registerCommand(context, "refreshGists", async () => gist.getList());

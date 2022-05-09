@@ -1,16 +1,12 @@
 import {
-    Uri,
     window,
-    Position,
     QuickPick,
-    workspace,
     QuickPickItem,
-    Range,
     Progress,
     ProgressLocation,
-    TextEditor,
+    FileSystemError
 } from "vscode";
-import {EXTENSION_NAME} from "../constants";
+import { EXTENSION_NAME, FS_SCHEME } from "../constants";
 
 import Gitee from "./gitee";
 import Github from "./github";
@@ -45,7 +41,7 @@ export default class GistServer {
     public tokenType: string = "gitee";
     public currId: string = "";
     private lastFile: string = '';
-    private since:string='';
+    private since: string = '';
     constructor() {
         try {
             fs.accessSync(this.cache, fs.constants.F_OK);
@@ -81,6 +77,15 @@ export default class GistServer {
             this.tokenType = 'github';
         }
         this.api.token = token;
+    }
+
+    /** 通过id获取gist */
+    public async getGistForId(id: string): Promise<Gist> {
+        let gist = this.gistTreeDataProvider.getGistForId(id);
+        if (!gist) {
+            gist = await this.api.getSingle(id);
+        }
+        return gist;
     }
 
     /**
@@ -149,6 +154,25 @@ export default class GistServer {
     }
 
     /**
+     * 修改代码片段的描述
+     */
+    public async changeDescription(element: GistTreeItem) {
+        const description = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistEditPlaceHolder`, element.gist!.description), value: element.gist!.description });
+        if (!description || description === element.gist!.description) {
+            //如果为空或者未改变,不保存
+            return;
+        }
+        try {
+            const gist: Gist = { description, id: element.gist!.id } as Gist;
+            await this.api.edit(gist);
+            window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistchangeDescriptionSuccess`, description), 3000);
+            this.getNew();
+        } catch (error) {
+            window.showErrorMessage(localize(`${EXTENSION_NAME}.gistEditError`, <string>error));
+        }
+    }
+
+    /**
      * 删除一个代码片段
      */
     public async delete(element: GistTreeItem) {
@@ -159,7 +183,7 @@ export default class GistServer {
         this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistDeleteProgress`, <string>element.label), async () => {
             try {
                 await this.api.delete(element.id || "");
-                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistDeleteSuccess`, <string>element.label),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistDeleteSuccess`, <string>element.label), 3000);
                 this.gistTreeDataProvider.removeGist(<string>element.id);
                 this.getNew();
             } catch (error) {
@@ -167,6 +191,34 @@ export default class GistServer {
             }
         });
 
+    }
+
+    /**
+    * 代码片段中的文件重命名
+    */
+    public async renameFile(element: GistFileTreeItem) {
+        const fileName = <string>element.label;
+        const newFileName = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistFileRenamePlaceHolder`, fileName)});
+        if (!newFileName || newFileName === fileName) {
+            //如果为空或者未改变,不保存
+            return;
+        }
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistFileRenameProgress`, <string>element.gist.description, <string>fileName), async () => {
+            try {
+                if(element.gist.files[newFileName]){ 
+                    throw FileSystemError.FileExists(newFileName);
+                }
+                let gist =await this.getGistForId(element.gist.id!);
+                let newgist:Gist={id:gist.id,description:gist.description,files:{}} as Gist;
+                newgist.files[newFileName]={'content':await this.api.getContent(gist.files[fileName]!)} as GistFile;
+                newgist.files[fileName]=null;
+                await this.api.edit(newgist);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistFileRenameSuccess`, <string>element.gist.description, <string>fileName), 3000);
+                this.getNew();
+            } catch (error) {
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistFileRenameError`, <string>element.gist.description, <string>fileName, <string>error));
+            }
+        });
     }
 
     /**
@@ -181,7 +233,7 @@ export default class GistServer {
         this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistFileDeleteProgress`, <string>element.gist.description, <string>fileName), async () => {
             try {
                 await this.api.deleteFile(element.gist.id || "", fileName);
-                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistFileDeleteSuccess`, <string>element.gist.description, <string>fileName),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistFileDeleteSuccess`, <string>element.gist.description, <string>fileName), 3000);
                 this.getNew();
             } catch (error) {
                 window.showErrorMessage(localize(`${EXTENSION_NAME}.gistFileDeleteError`, <string>element.gist.description, <string>fileName, <string>error));
@@ -192,29 +244,28 @@ export default class GistServer {
      * 获取最近更新的代码片段
      */
     public async getNew() {
-        this.getList(1,this.since);
+        this.getList(1, this.since);
     }
     /**
      * 获取个人的代码片段
      */
-    public async getList(page: number = 1,since: string = "") {
+    public async getList(page: number = 1, since: string = "") {
         this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.getListProgress`, page.toString(), localize(`${EXTENSION_NAME}.gists`)), async () => {
             try {
                 let gistList = await this.api.getList(this.limit, page, since);
                 if (gistList.length > 0) {
                     gistList.map(gist => {
-                        if(<string>gist.updated_at>this.since){
-                            this.since=<string>gist.updated_at;
+                        if (<string>gist.updated_at > this.since) {
+                            this.since = <string>gist.updated_at;
                         }
                     });
                 }
                 if (page === 1) {
                     this.currId = '';
                 }
-                if(since!=='')
-                {
-                    this.gistTreeDataProvider.insertData(gistList,false);
-                }else{
+                if (since !== '') {
+                    this.gistTreeDataProvider.insertData(gistList, false);
+                } else {
                     if (page === 1) {
                         this.gistTreeDataProvider.setData(gistList, false);
                     } else {
@@ -222,7 +273,7 @@ export default class GistServer {
                     }
                 }
                 if (gistList.length === this.limit) {
-                    this.getList((page + 1),since);
+                    this.getList((page + 1), since);
                 }
 
             } catch (error) {
@@ -254,9 +305,6 @@ export default class GistServer {
         });
     }
 
-
-
-
     /**
      * 编辑一个代码片段
      */
@@ -266,23 +314,17 @@ export default class GistServer {
             window.showErrorMessage(localize(`${EXTENSION_NAME}.gistNotOpen`));
             return;
         }
-        const docPath = path.resolve(edit.document.uri.fsPath);
-        const docDir = path.dirname(path.dirname(docPath));
-        const savePath = this.getSavePath("user");
 
-        // 判断当前文档的路径是否为代码片段存储目录
-        if (savePath.toLocaleLowerCase() !== docDir.toLocaleLowerCase()) {
-            window.showErrorMessage(localize(`${EXTENSION_NAME}.documentIsNotOperate`, savePath, docDir));
+        if (edit.document.uri.scheme !== FS_SCHEME) {
             return;
         }
+        const docPath = path.resolve(edit.document.uri.fsPath);
         try {
             const fileName = path.basename(docPath);
-            const gist = await this.api.getSingle(path.basename(path.dirname(docPath)));
-            const description = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistEditPlaceHolder`, gist.description) }) || gist.description;
-            gist.files[fileName].content = edit.document.getText();
-            gist.description = description;
+            const gist = await this.api.getSingle(edit.document.uri.authority);
+            gist.files[fileName]!.content = edit.document.getText();
             await this.api.edit(gist);
-            window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistEditSuccess`, description, fileName),3000);
+            window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistEditSuccess`, gist.description, fileName), 3000);
             this.getNew();
         } catch (error) {
             window.showErrorMessage(localize(`${EXTENSION_NAME}.gistEditError`, <string>error));
@@ -310,7 +352,7 @@ export default class GistServer {
                         [fileName]: { content },
                     },
                 });
-                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCreateSuccess`, description),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCreateSuccess`, description), 3000);
                 this.getNew();
             } catch (error) {
                 window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCreateError`, description, <string>error));
@@ -343,7 +385,7 @@ export default class GistServer {
                                 [fileName]: { content },
                             };
                             await this.api.edit(gist);
-                            window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistAddSuccess`, fileName, gist.description),3000);
+                            window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistAddSuccess`, fileName, gist.description), 3000);
                             this.getNew();
                         } catch (error) {
                             window.showErrorMessage(localize(`${EXTENSION_NAME}.gistAddError`, fileName, gist.description, <string>error));
@@ -385,7 +427,7 @@ export default class GistServer {
                 let commentList = await this.api.getComments(this.currId, page);
                 this.gistComments?.setData(commentList.map(item => { return new GistCommentTreeItem(item); }));
             } catch (error) {
-                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentsError`,<string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentsError`, <string>error));
             }
         });
     }
@@ -402,10 +444,10 @@ export default class GistServer {
         this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistCommentCreateProgress`), async () => {
             try {
                 await this.api.addComment(this.currId, body);
-                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCommentCreateSuccess`,body),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCommentCreateSuccess`, body), 3000);
                 this.getComments();
             } catch (error) {
-                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentCreateError`,body,<string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentCreateError`, body, <string>error));
             }
         });
     }
@@ -417,32 +459,32 @@ export default class GistServer {
      */
     public async editComment(commentId: string, body: string) {
         if (!this.checkCurrId()) { return; }
-        const bodyNew = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistCommentEditPlaceHolder`,body), value: body });
+        const bodyNew = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistCommentEditPlaceHolder`, body), value: body });
         if (bodyNew === undefined) { return; }
         this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistCommentEditProgress`), async () => {
             try {
                 await this.api.editComment(this.currId, commentId, bodyNew);
                 this.getComments();
-                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCommentEditSuccess`,body),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCommentEditSuccess`, body), 3000);
             } catch (error) {
-                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentEditError`,body,<string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentEditError`, body, <string>error));
             }
         });
     }
 
-    public async deleteComment(commentId: string,body:string) {
+    public async deleteComment(commentId: string, body: string) {
         const result = await window.showWarningMessage(localize(`${EXTENSION_NAME}.gistCommentDeleteConfirm`, body), localize(`${EXTENSION_NAME}.confirm`), localize(`${EXTENSION_NAME}.cancel`));
         if (result !== localize(`${EXTENSION_NAME}.confirm`)) {
             return;
         }
-        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistCommentDeleteProgress`,body), async () => {
+        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistCommentDeleteProgress`, body), async () => {
 
             try {
                 await this.api.deleteComment(this.currId, commentId);
                 this.getComments();
-                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCommentDeleteSuccess`,body),3000);
+                window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistCommentDeleteSuccess`, body), 3000);
             } catch (error) {
-                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentDeleteError`,body,<string>error));
+                window.showErrorMessage(localize(`${EXTENSION_NAME}.gistCommentDeleteError`, body, <string>error));
             }
         });
     }
@@ -452,7 +494,7 @@ export default class GistServer {
      */
     private checkCurrId(): boolean {
         if (this.currId === '') {
-            window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistNoSelected`),3000);
+            window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistNoSelected`), 3000);
             return false;
         }
         return true;
@@ -471,61 +513,6 @@ export default class GistServer {
         this.quickPick.show();
     }
 
-    /**
-     * 获取代码片段临时存储目录
-     */
-    public getSavePath(isPublic: string | boolean | undefined) {
-        let ispublicTemp = isPublic === 'true' || isPublic === true;
-        const savePath: string = workspace.getConfiguration("gist").get("savePath") || `${os.homedir()}/.ldgGist`;
-        return path.resolve(path.join(savePath, this.tokenType, ispublicTemp ? "public" : "prive"));
-    }
-
-    /**
-     * 打开新的文件编辑窗口
-     * @param gist 代码片段
-     * @param fileName 文件名
-     * @param type 代码片段类型: true(个人)/false(代码片段广场)
-     */
-    public async createTextEditor(args: any[]) {
-        let gist = args[0] as Gist;
-        let fileName = args[1] as string;
-        const filePath = `${this.getSavePath(gist.public)}/${gist.id}/${fileName}`;
-        //避免同一个文件被多次点击
-        if (this.lastFile === filePath) { return; }
-        this.lastFile = filePath;
-        this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistContentProgress`), async () => {
-            let agreement: string;
-            try {
-                // 检测文件是否已存在
-                fs.accessSync(filePath);
-                agreement = "file:";
-            } catch (error) {
-                agreement = "untitled:";
-            }
-            const temp = `${agreement}${this.getSavePath(gist.public)}/${gist.id}/${fileName}`;
-            const uri = Uri.parse(temp);
-            const content = await this.api.getContent(gist.files[fileName]);
-
-            let filedir = path.dirname(uri.fsPath);
-            this.mkdir(filedir);
-            await fs.writeFile(uri.fsPath, content, (r) => {
-                if (r !== null) {
-                    window.showErrorMessage(localize(`${EXTENSION_NAME}.fileWriteError`,r.message));
-                } else {
-                    window.showTextDocument(Uri.file(uri.fsPath), { preview: true, });
-                }
-            });
-
-            // const doc = await workspace.openTextDocument(uri);
-            // const textEditor = await window.showTextDocument(doc, { preview: true });
-            // textEditor.edit((editBuilder) => {
-            //     //避免点击次数过多，重复加载文件，先清空内容
-            //     editBuilder.delete(new Range(new Position(0, 0), new Position(doc.lineCount, 0)));
-            //     editBuilder.insert(new Position(0, 0), content);
-            // });
-        });
-
-    }
     private async executeCommandWithProgress(message: string, callback: any): Promise<void> {
         await window.withProgress({ location: ProgressLocation.Notification }, async (p: Progress<{}>) => {
             return new Promise<void>(async (resolve: () => void, reject: (e: any) => void): Promise<void> => {

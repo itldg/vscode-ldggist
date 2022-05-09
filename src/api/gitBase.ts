@@ -31,7 +31,7 @@ export interface Gist {
 }
 
 export interface GistFiles {
-    [fileName: string]: GistFile;
+    [fileName: string]: GistFile|null;
 }
 
 export interface GistFile {

@@ -6,6 +6,11 @@
 
 - 列表搜索代码片段
 
+## [0.0.8] - 2022-05-10
+
+### Changed
+- 优化编辑器和列表中菜单的排序
+
 ## [0.0.7] - 2022-05-09
 
 ### Changed
@@ -15,7 +20,7 @@
 
 ### Removed
 - 移除缓存目录配置
-- 移除代码片段的右键菜单
+- 移除代码片段的保存右键菜单
 
 ## [0.0.6] - 2022-04-29
 
@@ -77,7 +82,8 @@
     -   修改评论
     -   删除评论
 
-[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.7...HEAD
+[unreleased]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.8...HEAD
+[0.0.8]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.5...v0.0.6
 [0.0.5]: https://github.com/wanglong126/vscode-ldggist/compare/v0.0.4...v0.0.5

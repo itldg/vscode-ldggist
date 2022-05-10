@@ -3,7 +3,7 @@
 	"displayName": "LdgGist",
 	"publisher": "itldg",
 	"description": "基于Gitee和GitHub的代码片段管理工具",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"icon": "resources/logo.png",
 	"engines": {
 		"vscode": "^1.65.0"
@@ -172,24 +172,19 @@
 				{
 					"when": "editorHasSelection",
 					"command": "ldgGist.addFromSelect",
-					"group": "navigation@2"
-				},
-				{
-					"when": "editorFocus",
-					"command": "ldgGist.saveGistFile",
-					"group": "navigation@2"
+					"group": "navigation@3"
 				}
 			],
 			"explorer/context": [
 				{
 					"when": "!explorerResourceIsFolder",
 					"command": "ldgGist.createFromFile",
-					"group": "navigation"
+					"group": "navigation@2"
 				},
 				{
 					"when": "!explorerResourceIsFolder",
 					"command": "ldgGist.addFromFile",
-					"group": "navigation@1"
+					"group": "navigation@3"
 				}
 			],
 			"view/title": [

@@ -198,20 +198,20 @@ export default class GistServer {
     */
     public async renameFile(element: GistFileTreeItem) {
         const fileName = <string>element.label;
-        const newFileName = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistFileRenamePlaceHolder`, fileName)});
+        const newFileName = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistFileRenamePlaceHolder`, fileName), value: fileName, valueSelection: [0, fileName.length] });
         if (!newFileName || newFileName === fileName) {
             //如果为空或者未改变,不保存
             return;
         }
         this.executeCommandWithProgress(localize(`${EXTENSION_NAME}.gistFileRenameProgress`, <string>element.gist.description, <string>fileName), async () => {
             try {
-                if(element.gist.files[newFileName]){ 
+                if (element.gist.files[newFileName]) {
                     throw FileSystemError.FileExists(newFileName);
                 }
-                let gist =await this.getGistForId(element.gist.id!);
-                let newgist:Gist={id:gist.id,description:gist.description,files:{}} as Gist;
-                newgist.files[newFileName]={'content':await this.api.getContent(gist.files[fileName]!)} as GistFile;
-                newgist.files[fileName]=null;
+                let gist = await this.getGistForId(element.gist.id!);
+                let newgist: Gist = { id: gist.id, description: gist.description, files: {} } as Gist;
+                newgist.files[newFileName] = { 'content': await this.api.getContent(gist.files[fileName]!) } as GistFile;
+                newgist.files[fileName] = null;
                 await this.api.edit(newgist);
                 window.setStatusBarMessage(localize(`${EXTENSION_NAME}.gistFileRenameSuccess`, <string>element.gist.description, <string>fileName), 3000);
                 this.getNew();

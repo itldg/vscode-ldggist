@@ -162,7 +162,7 @@ export default class Github implements GitBase {
 
     public getContent(gistFile: GistFile): Promise<string> {
         return new Promise((resovle, reject) => {
-            request.get(gistFile.raw_url || "", this.getHeader(),(err: any, res: request.Response) => {
+            request.get(gistFile.raw_url || "", {...this.getHeader(),json:false},(err: any, res: request.Response) => {
                 if (err) {
                     reject(err.message);
                 } else if (res.statusCode !== 200) {

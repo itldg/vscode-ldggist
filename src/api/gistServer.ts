@@ -98,7 +98,9 @@ export default class GistServer {
             return;
         }
         const description = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistDescription`) }) || "";
+        if (description === "") return;
         const fileName = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.fileName`) }) || "";
+        if (fileName === "") return;
         const ispublic = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.isPublic`) }) || "";
         await this.create(description, fileName, edit.document.getText(edit.selection), ispublic);
     }
@@ -115,6 +117,7 @@ export default class GistServer {
                 return;
             }
             const description = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.gistDescription`) }) || "";
+            if (description === "") return;
             const ispublic = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.isPublic`) }) || "";
             await this.create(description, path.basename(filePath), content, ispublic);
         } catch (error) {
@@ -132,6 +135,7 @@ export default class GistServer {
             return;
         }
         const fileName = await window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.fileName`) }) || "";
+        if (fileName === "") return;
         await this.add(fileName, edit.document.getText(edit.selection));
     }
 

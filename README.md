@@ -19,10 +19,8 @@
   </a>
   <a target="_blank" href="https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist">
     <img src="https://vsmarketplacebadges.dev/installs-short/itldg.ldgGist.png" alt="">
-    
   </a>
 </p>
-
 
 ## 快速开始
 
@@ -33,6 +31,7 @@
 ### 删除文件或代码片段
 
 ![demo_delete](https://raw.githubusercontent.com/wanglong126/vscode-ldggist/main/docs/gifs/delete.gif)
+
 ## 功能
 
 -   代码片段
@@ -48,7 +47,7 @@
     -   删除代码片段中的文件
     -   代码片段文件重命名
     -   代码片段发生改变后局部刷新
--   代码片段历史  [Gitee测试未返回正确结果](https://gitee.com/oschina/git-osc/issues/I5072D)
+-   代码片段历史 [Gitee 测试未返回正确结果](https://gitee.com/oschina/git-osc/issues/I5072D)
 -   代码片段评论
     -   评论展示
     -   新增评论
@@ -57,7 +56,6 @@
 -   多语言
     -   中文
     -   英文（机翻）
-
 
 ## 依赖权限
 
@@ -91,7 +89,7 @@
 
 希望各位大佬可以协助添砖加瓦，让其更加完善
 
-开源地址：[GitHub](https://github.com/wanglong126/vscode-ldggist)    |   [Gitee](https://gitee.com/diycms/vscode-ldggist)
+开源地址：[GitHub](https://github.com/wanglong126/vscode-ldggist) | [Gitee](https://gitee.com/diycms/vscode-ldggist)
 
 商店下载：[VS Marketplace](https://marketplace.visualstudio.com/items?itemName=itldg.ldgGist)
 

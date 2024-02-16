@@ -5,21 +5,24 @@ import { GistCommentTreeItem, GistFileTreeItem, GistTreeItem } from './tree/gist
 import path = require('path');
 import localize from "./localize";
 import { Gist } from './api/gitBase';
-import {EXTENSION_NAME, FS_SCHEME} from './constants';
+import { EXTENSION_NAME, FS_SCHEME } from './constants';
 import { GistFs } from './provider/gistSystemProvider';
 
 const gist = new GistApi();
-const gf=new GistFs(gist);
+const gf = new GistFs(gist);
 vscode.workspace.registerFileSystemProvider(FS_SCHEME, gf);
 
 //用于判断Token是否被修改
 var lastToken: string = '';
+//存储token的键名
+const tokenKey: string = 'accessToken';
+let extensionContext: vscode.ExtensionContext;
 export function activate(context: vscode.ExtensionContext) {
+	extensionContext = context;
 	console.log(`${EXTENSION_NAME}  activate`);
 	gf.onDidChangeFile(e => {
-		console.log('change',JSON.stringify( e));
-		if(e.length===1)
-		{
+		console.log('change', JSON.stringify(e));
+		if (e.length === 1) {
 			gist.edit();
 		}
 	});
@@ -28,12 +31,12 @@ export function activate(context: vscode.ExtensionContext) {
 		if (gist.currId === id) { return; }
 		gist.currId = id; gist.getCommits(); gist.getComments();
 	});
-	registerCommand(context, "openCode", async (args: any[]) => { 
+	registerCommand(context, "openCode", async (args: any[]) => {
 		let gist = args[0] as Gist;
-        let fileName = args[1] as string;
+		let fileName = args[1] as string;
 		gf.openGist(<string>gist.id, fileName);
 		let gistInfo = args[0] as Gist;
-		if(!gistInfo.public){
+		if (!gistInfo.public) {
 			vscode.commands.executeCommand(`${EXTENSION_NAME}.selectedGist`, args[0].id);
 		}
 	});
@@ -53,7 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	registerCommand(context, "createComment", async () => gist.addComment());
 	registerCommandOneArg(context, "editComment", async (item: GistCommentTreeItem) => gist.editComment(<string>item.id, <string>item.label));
-	registerCommandOneArg(context, "deleteComment", async (item: GistCommentTreeItem) => gist.deleteComment(<string>item.id,<string>item.label));
+	registerCommandOneArg(context, "deleteComment", async (item: GistCommentTreeItem) => gist.deleteComment(<string>item.id, <string>item.label));
 
 	vscode.window.registerTreeDataProvider('gists', gist.gistTreeDataProvider);
 	vscode.window.registerTreeDataProvider('publicGists', gist.publicGistTreeDataProvider);
@@ -68,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() { }
 
 async function checkConfig() {
-	let token = <string>vscode.workspace.getConfiguration(EXTENSION_NAME).get('accessToken');
+	const token = extensionContext.globalState.get(tokenKey) as string;
 	if (!token) {
 		vscode.window.showInformationMessage(localize(`${EXTENSION_NAME}.noTokenMsg`));
 		return await setToken();
@@ -77,14 +80,14 @@ async function checkConfig() {
 	return true;
 }
 async function setToken(): Promise<boolean> {
-	const token = await vscode.window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.fillToken`), value: lastToken });
+	const token = await vscode.window.showInputBox({ placeHolder: localize(`${EXTENSION_NAME}.fillToken`) });
 	if (token) {
 		try {
-			await vscode.workspace.getConfiguration(EXTENSION_NAME).update('accessToken', token,vscode.ConfigurationTarget.Global);
+			await extensionContext.globalState.update(tokenKey, token);
 			checkType(token);
-			vscode.commands.executeCommand(`${EXTENSION_NAME}.refreshGists`); vscode.commands.executeCommand(`${EXTENSION_NAME}.refreshPublicGists`); 
+			vscode.commands.executeCommand(`${EXTENSION_NAME}.refreshGists`); vscode.commands.executeCommand(`${EXTENSION_NAME}.refreshPublicGists`);
 			return true;
-		} catch (error:any) {
+		} catch (error: any) {
 			vscode.window.showWarningMessage(error.message);
 		}
 	}
@@ -109,7 +112,7 @@ function registerCommandOneArg(context: vscode.ExtensionContext, name: string, c
 	let disposable = vscode.commands.registerCommand(`${EXTENSION_NAME}.${name}`, async (arg: any) => {
 		if (name === "login" || await checkConfig()) {
 			callback(arg);
-		} 
+		}
 	});
 	context.subscriptions.push(disposable);
 }

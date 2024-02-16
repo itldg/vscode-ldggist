@@ -43,8 +43,6 @@
     "ldgGist.deleteComment": "Delete commont",
 
 
-    "ldgGist.accessToken": "GitHub[Generate token](https://github.com/settings/tokens) or Gitee[Generate token](https://gitee.com/profile/personal_access_tokens) `access token` ",
-
     "ldgGist.now":"now",
     "ldgGist.secondsAgo":"{0} seconds ago",
     "ldgGist.minutesAgo":"{0} minutes ago",

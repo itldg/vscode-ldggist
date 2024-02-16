@@ -43,8 +43,6 @@
     "ldgGist.deleteComment": "删除评论",
 
 
-    "ldgGist.accessToken": "请填写 Gitee[立即创建](https://gitee.com/profile/personal_access_tokens) 或者 GitHub[立即创建](https://github.com/settings/tokens) 创建的 `私人令牌`",
-
     "ldgGist.now":"刚刚",
     "ldgGist.secondsAgo":"{0} 秒钟前",
     "ldgGist.minutesAgo":"{0} 分钟前",
